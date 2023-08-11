@@ -15,6 +15,7 @@
 		63FD5EE22A861ED1009BC89F /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EE12A861ED1009BC89F /* MainVC.swift */; };
 		63FD5EE52A861F18009BC89F /* API_Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EE42A861F18009BC89F /* API_Key.swift */; };
 		63FD5EE72A861F28009BC89F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63FD5EE62A861F28009BC89F /* .gitignore */; };
+		63FD5EEA2A8620FB009BC89F /* IdentifierHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EE92A8620FB009BC89F /* IdentifierHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		63FD5EE12A861ED1009BC89F /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		63FD5EE42A861F18009BC89F /* API_Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_Key.swift; sourceTree = "<group>"; };
 		63FD5EE62A861F28009BC89F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		63FD5EE92A8620FB009BC89F /* IdentifierHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,8 @@
 		63A693592A861E5B00E8F376 /* assign */ = {
 			isa = PBXGroup;
 			children = (
+				63FD5EEB2A862134009BC89F /* Resources */,
+				63FD5EE82A8620E8009BC89F /* Helper */,
 				63FD5EE32A861F11009BC89F /* API */,
 				63FD5EE02A861EC4009BC89F /* Model */,
 				63FD5EDF2A861EB8009BC89F /* ViewController */,
@@ -103,6 +107,21 @@
 				63FD5EE42A861F18009BC89F /* API_Key.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		63FD5EE82A8620E8009BC89F /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				63FD5EE92A8620FB009BC89F /* IdentifierHelper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		63FD5EEB2A862134009BC89F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,6 +198,7 @@
 			files = (
 				63A6935B2A861E5B00E8F376 /* AppDelegate.swift in Sources */,
 				63FD5EE22A861ED1009BC89F /* MainVC.swift in Sources */,
+				63FD5EEA2A8620FB009BC89F /* IdentifierHelper.swift in Sources */,
 				63FD5EE52A861F18009BC89F /* API_Key.swift in Sources */,
 				63A6935D2A861E5B00E8F376 /* SceneDelegate.swift in Sources */,
 			);
