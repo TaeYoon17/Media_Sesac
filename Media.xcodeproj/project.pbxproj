@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		635EE7502A868B8B009E66F5 /* TrendResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635EE74F2A868B8B009E66F5 /* TrendResponse.swift */; };
+		635EE7522A868D5A009E66F5 /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635EE7512A868D5A009E66F5 /* UserDefaultsHelper.swift */; };
+		635EE7542A8766EF009E66F5 /* MediaProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635EE7532A8766EF009E66F5 /* MediaProtocol.swift */; };
+		635EE7562A876B40009E66F5 /* TV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635EE7552A876B40009E66F5 /* TV.swift */; };
 		63A6935B2A861E5B00E8F376 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6935A2A861E5B00E8F376 /* AppDelegate.swift */; };
 		63A6935D2A861E5B00E8F376 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A6935C2A861E5B00E8F376 /* SceneDelegate.swift */; };
 		63A693622A861E5B00E8F376 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A693602A861E5B00E8F376 /* Main.storyboard */; };
@@ -16,9 +20,19 @@
 		63FD5EE52A861F18009BC89F /* API_Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EE42A861F18009BC89F /* API_Key.swift */; };
 		63FD5EE72A861F28009BC89F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 63FD5EE62A861F28009BC89F /* .gitignore */; };
 		63FD5EEA2A8620FB009BC89F /* IdentifierHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EE92A8620FB009BC89F /* IdentifierHelper.swift */; };
+		63FD5EED2A8622CD009BC89F /* TMDB_Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EEC2A8622CD009BC89F /* TMDB_Router.swift */; };
+		63FD5EF02A8622F5009BC89F /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 63FD5EEF2A8622F5009BC89F /* SwiftyJSON */; };
+		63FD5EF32A86232F009BC89F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 63FD5EF22A86232F009BC89F /* Alamofire */; };
+		63FD5EF52A862529009BC89F /* RouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EF42A862529009BC89F /* RouterProtocol.swift */; };
+		63FD5EF82A8629A3009BC89F /* TMDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EF72A8629A3009BC89F /* TMDB.swift */; };
+		63FD5EFA2A863730009BC89F /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EF92A863730009BC89F /* Movie.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		635EE74F2A868B8B009E66F5 /* TrendResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendResponse.swift; sourceTree = "<group>"; };
+		635EE7512A868D5A009E66F5 /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
+		635EE7532A8766EF009E66F5 /* MediaProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProtocol.swift; sourceTree = "<group>"; };
+		635EE7552A876B40009E66F5 /* TV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TV.swift; sourceTree = "<group>"; };
 		63A693572A861E5B00E8F376 /* assign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A6935A2A861E5B00E8F376 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63A6935C2A861E5B00E8F376 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +44,10 @@
 		63FD5EE42A861F18009BC89F /* API_Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_Key.swift; sourceTree = "<group>"; };
 		63FD5EE62A861F28009BC89F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		63FD5EE92A8620FB009BC89F /* IdentifierHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifierHelper.swift; sourceTree = "<group>"; };
+		63FD5EEC2A8622CD009BC89F /* TMDB_Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDB_Router.swift; sourceTree = "<group>"; };
+		63FD5EF42A862529009BC89F /* RouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterProtocol.swift; sourceTree = "<group>"; };
+		63FD5EF72A8629A3009BC89F /* TMDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDB.swift; sourceTree = "<group>"; };
+		63FD5EF92A863730009BC89F /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63FD5EF02A8622F5009BC89F /* SwiftyJSON in Frameworks */,
+				63FD5EF32A86232F009BC89F /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +117,10 @@
 		63FD5EE02A861EC4009BC89F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				635EE7532A8766EF009E66F5 /* MediaProtocol.swift */,
+				63FD5EF92A863730009BC89F /* Movie.swift */,
+				635EE7552A876B40009E66F5 /* TV.swift */,
+				635EE74F2A868B8B009E66F5 /* TrendResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -104,6 +128,7 @@
 		63FD5EE32A861F11009BC89F /* API */ = {
 			isa = PBXGroup;
 			children = (
+				63FD5EF62A86252E009BC89F /* Router */,
 				63FD5EE42A861F18009BC89F /* API_Key.swift */,
 			);
 			path = API;
@@ -113,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				63FD5EE92A8620FB009BC89F /* IdentifierHelper.swift */,
+				635EE7512A868D5A009E66F5 /* UserDefaultsHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -120,8 +146,18 @@
 		63FD5EEB2A862134009BC89F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				63FD5EF72A8629A3009BC89F /* TMDB.swift */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		63FD5EF62A86252E009BC89F /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				63FD5EEC2A8622CD009BC89F /* TMDB_Router.swift */,
+				63FD5EF42A862529009BC89F /* RouterProtocol.swift */,
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +176,10 @@
 			dependencies = (
 			);
 			name = assign;
+			packageProductDependencies = (
+				63FD5EEF2A8622F5009BC89F /* SwiftyJSON */,
+				63FD5EF22A86232F009BC89F /* Alamofire */,
+			);
 			productName = assign;
 			productReference = 63A693572A861E5B00E8F376 /* assign.app */;
 			productType = "com.apple.product-type.application";
@@ -168,6 +208,10 @@
 				Base,
 			);
 			mainGroup = 63A6934E2A861E5B00E8F376;
+			packageReferences = (
+				63FD5EEE2A8622F5009BC89F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				63FD5EF12A86232F009BC89F /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 63A693582A861E5B00E8F376 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -197,9 +241,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				63A6935B2A861E5B00E8F376 /* AppDelegate.swift in Sources */,
+				635EE7562A876B40009E66F5 /* TV.swift in Sources */,
+				635EE7502A868B8B009E66F5 /* TrendResponse.swift in Sources */,
+				635EE7542A8766EF009E66F5 /* MediaProtocol.swift in Sources */,
+				63FD5EF52A862529009BC89F /* RouterProtocol.swift in Sources */,
+				63FD5EFA2A863730009BC89F /* Movie.swift in Sources */,
 				63FD5EE22A861ED1009BC89F /* MainVC.swift in Sources */,
 				63FD5EEA2A8620FB009BC89F /* IdentifierHelper.swift in Sources */,
+				63FD5EF82A8629A3009BC89F /* TMDB.swift in Sources */,
+				635EE7522A868D5A009E66F5 /* UserDefaultsHelper.swift in Sources */,
 				63FD5EE52A861F18009BC89F /* API_Key.swift in Sources */,
+				63FD5EED2A8622CD009BC89F /* TMDB_Router.swift in Sources */,
 				63A6935D2A861E5B00E8F376 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,6 +476,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		63FD5EEE2A8622F5009BC89F /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		63FD5EF12A86232F009BC89F /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		63FD5EEF2A8622F5009BC89F /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63FD5EEE2A8622F5009BC89F /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		63FD5EF22A86232F009BC89F /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 63FD5EF12A86232F009BC89F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 63A6934F2A861E5B00E8F376 /* Project object */;
 }

@@ -6,6 +6,11 @@
 //
 
 import Foundation
+import SwiftyJSON
 protocol Identifier{
     static var identifier:String{get}
+}
+protocol ConvertableJSON{
+    var id:Int {get set}
+    init(json:JSON)
 }
