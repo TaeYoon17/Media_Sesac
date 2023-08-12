@@ -32,7 +32,7 @@ struct Movie:Media,ConvertableJSON{
     var popularity:Double
     var voteAverage:Double
     var voteCount:Int
-    
+//MARK: -- Movie 독자 데이터
     var title:String
     var originalTitle :String
     var releaseDate:String
