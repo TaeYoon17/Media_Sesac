@@ -10,6 +10,7 @@ import UIKit
 class MainVC: UIViewController{
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableHeaderView: UIView!
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var calenderBtn: UIButton!
     @IBOutlet weak var mediaSegmentControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
@@ -40,7 +41,7 @@ extension MainVC:UITableViewDelegate,UITableViewDataSource{
     func configureTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        tableView.rowHeight = 80
+        tableView.rowHeight = UITableView.automaticDimension
         self.tableView.register(.init(nibName: MainItemCell.identifier, bundle: nil), forCellReuseIdentifier: MainItemCell.identifier)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,7 +50,7 @@ extension MainVC:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let c = tableView.dequeueReusableCell(withIdentifier: MainItemCell.identifier) as? MainItemCell else {return .init()}
-        c.backgroundColor = .red
+        c.backgroundColor = .white
         return c
     }
     
@@ -63,14 +64,32 @@ extension MainVC:UITableViewDelegate,UITableViewDataSource{
         }else if prevY < lineY{
             DispatchQueue.main.async {
                 self.headerView.isHidden = true
-//                self.tableHeaderView.backgroundColor = .white
+                //                self.tableHeaderView.backgroundColor = .white
             }
         }
-//        else if nowY == lineY{
-//            DispatchQueue.main.async {
-//                self.headerView.isHidden = true
-//            }
-//        }
+        
+        let maxHeight = scrollView.contentSize.height - 100
+        print(maxHeight,nowY + self.bottomView.frame.origin.y)
+        UIView.animate(withDuration: 0.2) { [weak self] in
+            guard let self else {return}
+            if maxHeight <= nowY + self.bottomView.frame.origin.y{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.bottomView.layer.opacity = 1
+                    self.bottomView.isHidden = false
+                }
+            }else if prevY <= lineY{
+                    self.bottomView.layer.opacity = 1
+                    self.bottomView.isHidden = false
+            }else if prevY < nowY{
+                self.bottomView.layer.opacity = 0
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.bottomView.isHidden = true
+                }
+            }else if prevY > nowY{
+            self.bottomView.layer.opacity = 1
+            self.bottomView.isHidden = false
+        }
+    }
         prevY = nowY
     }
 }
@@ -85,8 +104,6 @@ extension MainVC{
             print("주간 확인")
         }
         self.calenderBtn.menu = UIMenu(title: "설정하기",options: .displayInline,children: [daily,week])
-        
-        
     }
 }
 //MARK: -- 세그먼트컨트롤러 설정
