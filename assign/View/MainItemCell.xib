@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZ7-Id-74r" userLabel="ShadowView">
-                        <rect key="frame" x="20" y="83.333333333333343" width="429.66666666666669" height="343.66666666666663"/>
+                        <rect key="frame" x="20" y="79.333333333333343" width="429.66666666666669" height="343.66666666666663"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OBn-Vl-vNl" userLabel="Wrapper">
                                 <rect key="frame" x="0.0" y="0.0" width="429.66666666666669" height="343.66666666666669"/>
@@ -85,25 +85,25 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YbM-42-l0z">
-                                        <rect key="frame" x="16" y="171.66666666666669" width="77" height="29"/>
+                                        <rect key="frame" x="16" y="175.66666666666669" width="74.333333333333329" height="25"/>
                                         <subviews>
                                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="paL-7I-DIb">
-                                                <rect key="frame" x="0.0" y="0.0" width="40.333333333333336" height="29"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="40.333333333333336" height="25"/>
                                                 <color key="backgroundColor" systemColor="systemIndigoColor"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="평점">
                                                     <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
-                                                    <directionalEdgeInsets key="contentInsets" top="6" leading="8" bottom="6" trailing="8"/>
+                                                    <directionalEdgeInsets key="contentInsets" top="4" leading="8" bottom="4" trailing="8"/>
                                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                             </button>
                                             <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5i1-Lx-IaA">
-                                                <rect key="frame" x="40.333333333333329" y="0.0" width="36.666666666666671" height="29"/>
+                                                <rect key="frame" x="40.333333333333329" y="1.3333333333333144" width="34" height="22.333333333333332"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="3.3">
-                                                    <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
-                                                    <directionalEdgeInsets key="contentInsets" top="6" leading="8" bottom="6" trailing="8"/>
+                                                    <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
+                                                    <directionalEdgeInsets key="contentInsets" top="4" leading="8" bottom="4" trailing="8"/>
                                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                             </button>
@@ -155,7 +155,7 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="JdU-EH-hj0">
-                        <rect key="frame" x="20" y="20.000000000000004" width="616" height="47.333333333333343"/>
+                        <rect key="frame" x="20" y="16.000000000000004" width="636" height="47.333333333333343"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10/20/2020" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rry-SO-fd6">
                                 <rect key="frame" x="0.0" y="0.0" width="74.333333333333329" height="17"/>
@@ -175,12 +175,12 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="bZ7-Id-74r" firstAttribute="top" secondItem="JdU-EH-hj0" secondAttribute="bottom" constant="16" id="DkC-Qz-Tib"/>
-                    <constraint firstAttribute="bottom" secondItem="bZ7-Id-74r" secondAttribute="bottom" constant="20" id="GIK-fr-gkY"/>
-                    <constraint firstItem="JdU-EH-hj0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="QJF-hR-gwC"/>
+                    <constraint firstAttribute="bottom" secondItem="bZ7-Id-74r" secondAttribute="bottom" constant="8" id="GIK-fr-gkY"/>
+                    <constraint firstItem="JdU-EH-hj0" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="QJF-hR-gwC"/>
                     <constraint firstItem="JdU-EH-hj0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="RvS-pi-kOP"/>
                     <constraint firstAttribute="trailing" secondItem="bZ7-Id-74r" secondAttribute="trailing" constant="20" id="b93-Qc-l14"/>
-                    <constraint firstItem="bZ7-Id-74r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" symbolic="YES" id="bZK-yM-1bC"/>
-                    <constraint firstAttribute="trailing" secondItem="JdU-EH-hj0" secondAttribute="trailing" constant="20" id="tqo-sc-zkw"/>
+                    <constraint firstItem="bZ7-Id-74r" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="bZK-yM-1bC"/>
+                    <constraint firstAttribute="trailing" secondItem="JdU-EH-hj0" secondAttribute="trailing" id="tqo-sc-zkw"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -188,7 +188,7 @@
                 <outlet property="clipBtn" destination="8kc-RN-Nnh" id="9Gx-Zc-vNb"/>
                 <outlet property="dateLabel" destination="rry-SO-fd6" id="rGs-28-Qb9"/>
                 <outlet property="genreLabel" destination="Lgb-bg-q87" id="LDW-s4-5h3"/>
-                <outlet property="peopleLabel" destination="UmY-cE-8ei" id="zPt-Pa-0TL"/>
+                <outlet property="peoplesLabel" destination="UmY-cE-8ei" id="ISd-Rj-McR"/>
                 <outlet property="posterImgView" destination="HiK-aY-UT5" id="igX-dS-SvY"/>
                 <outlet property="ratingBtn" destination="5i1-Lx-IaA" id="1cK-BR-I4c"/>
                 <outlet property="shadowView" destination="bZ7-Id-74r" id="aBB-FK-jAZ"/>

@@ -8,25 +8,50 @@
 import Foundation
 import UIKit
 class MainVC: UIViewController{
+// 모델 뷰 바인딩
+    let globalCache = Cache.shared
+    lazy var mediaType:TMDB.MediaType = globalCache.mediaType{
+        didSet{
+            guard mediaType != oldValue else {return}
+            globalCache.mediaType = mediaType
+            mediaList = globalCache.getMediaList
+    
+        }
+    }
+    lazy var timeType:TMDB.Time_Window = globalCache.timeType{
+        didSet{
+            guard timeType != oldValue else {return}
+            globalCache.timeType = timeType
+            mediaList = globalCache.getMediaList
+            self.configureDateLabel()
+        }
+    }
+    lazy var mediaList = Cache.shared.getMediaList{
+        didSet{
+            guard mediaList != nil else {return}
+            print("medialist 가져오기 성공")
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    @IBOutlet var dateTypeBtns: [UIButton]!
+    @IBOutlet var trendSegmentControl: [UISegmentedControl]!
+    @IBOutlet var dateLabels: [UILabel]!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var calenderBtn: UIButton!
+    
     @IBOutlet weak var mediaSegmentControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
+        print(#function)
         super.viewDidLoad()
-        DispatchQueue.main.async {
-            self.headerView.getBlur(style: .prominent, corderRadius: 0)
-            self.headerView.backgroundColor = .init(white: 1, alpha: 0.666)
-            self.tableHeaderView.backgroundColor = .white
+        configure()
+        globalCache.trendFetchCompletion = {[weak self] list in
+            print("컴플리션 실행! \(list)")
+            self?.mediaList = list
         }
-        let uiview = UIView(frame: .init(x: 0, y: 0, width: view.bounds.width, height: 64))
-        uiview.backgroundColor = .white
-        tableView.tableFooterView = uiview
-        configureTableView()
-        configureCalenderBtn()
-        configureSegmentController()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -34,29 +59,58 @@ class MainVC: UIViewController{
     }
     var prevY: CGFloat = 0.0
     let lineY:CGFloat = -143
-    
+    func configure(){
+        self.configureDateLabel()
+        self.configureTableView()
+        self.configureBlur()
+        self.configureCalenderBtn()
+        self.configureSegmentController()
+    }
+    func configureDateLabel(){
+        self.dateLabels.forEach {
+            switch timeType{
+            case .day:
+                $0.text = Date().day
+            case .week:
+                $0.text = Date().getWeek ?? "알려진 정보가 없습니다."
+            }
+        }
+    }
 }
 
 extension MainVC:UITableViewDelegate,UITableViewDataSource{
     func configureTableView(){
+        tableView.tableFooterView = {
+            let uiview = UIView(frame: .init(x: 0, y: 0, width: view.bounds.width, height: 64))
+            uiview.backgroundColor = .white
+            return uiview
+        }()
         self.tableView.delegate = self
         self.tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         self.tableView.register(.init(nibName: MainItemCell.identifier, bundle: nil), forCellReuseIdentifier: MainItemCell.identifier)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        12
+        self.mediaList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let c = tableView.dequeueReusableCell(withIdentifier: MainItemCell.identifier) as? MainItemCell else {return .init()}
-        c.backgroundColor = .white
+        c.selectionStyle = .none
+        if let media = self.mediaList?[indexPath.row]{
+            c.media = media
+            c.clipBtnAction = .init(handler: { _ in
+                print("링크가 눌림!!")
+            })
+        }
         return c
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("선택됨!! \(indexPath.row)")
+    }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let nowY = scrollView.contentOffset.y
-        print(nowY)
+//        print(nowY)
         if prevY <= lineY && nowY > lineY{
             DispatchQueue.main.async{
                 self.headerView.isHidden = false
@@ -69,7 +123,7 @@ extension MainVC:UITableViewDelegate,UITableViewDataSource{
         }
         
         let maxHeight = scrollView.contentSize.height - 100
-        print(maxHeight,nowY + self.bottomView.frame.origin.y)
+//        print(maxHeight,nowY + self.bottomView.frame.origin.y)
         UIView.animate(withDuration: 0.2) { [weak self] in
             guard let self else {return}
             if maxHeight <= nowY + self.bottomView.frame.origin.y{
@@ -93,35 +147,9 @@ extension MainVC:UITableViewDelegate,UITableViewDataSource{
         prevY = nowY
     }
 }
-//MARK: -- 주,일 버튼 설정
-extension MainVC{
-    func configureCalenderBtn(){
-        self.calenderBtn.showsMenuAsPrimaryAction = true
-        let daily = UIAction(title:"일별 트렌드",image: .init(systemName: "1.circle"),handler: { _ in
-            print("일간 확인")
-        })
-        let week = UIAction(title:"주간 트렌드",image:.init(systemName: "7.circle")){ _ in
-            print("주간 확인")
-        }
-        self.calenderBtn.menu = UIMenu(title: "설정하기",options: .displayInline,children: [daily,week])
-    }
-}
-//MARK: -- 세그먼트컨트롤러 설정
-extension MainVC{
-    func configureSegmentController(){
-        self.mediaSegmentControl.getBlur(style: .prominent)
-        self.mediaSegmentControl.backgroundColor = .init(white: 1, alpha: 0.666)
-        
-        let selectedTextAttributes: [NSAttributedString.Key: Any] = [
-            .foregroundColor: UIColor.systemBlue,
-            .font: UIFont.systemFont(ofSize: 17)
-        ]
-        mediaSegmentControl.setTitleTextAttributes(
-            selectedTextAttributes, for: .selected)
-    }
-}
 
-//MARK: -- Networkign
+
+//MARK: -- Networking
 //        let data = UserDefaults.standard.getTrend(media: .all, time: .day) as?
 //        TMDB.Router.Trend(media: .all, date: .week).action { json in
 //            let res = TrendResponse(json: json)

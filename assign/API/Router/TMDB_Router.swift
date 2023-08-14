@@ -41,7 +41,8 @@ extension TMDB{
             }
         }
         
-        func action(successCompletion:@escaping (JSON) -> Void,failHandler:@escaping (AFError) ->Void){
+        func action(successCompletion:@escaping (JSON) -> Void
+                    ,failHandler: ((AFError) ->Void)? = nil){
             AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
                 .validate(statusCode: 200...300)
                 .responseJSON{ val in
@@ -52,6 +53,7 @@ extension TMDB{
                         successCompletion(json)
                     case .failure(let err):
 //                        print(err)
+                        guard let failHandler else {return}
                         failHandler(err)
                     }
                 }

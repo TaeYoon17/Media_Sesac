@@ -7,13 +7,13 @@
 
 import Foundation
 import SwiftyJSON
+//MARK: -- 트렌드 미디어 리스트
 extension UserDefaults{
-//    typealias ElementType = (TMDB.MediaType,Data)
     struct MediaElement:Codable{
         let type: TMDB.MediaType
         let data:Data
     }
-    func getTrend(media: TMDB.MediaType,time: TMDB.Time_Window)-> [Media]?{
+    func getTrend(media: TMDB.MediaType,time: TMDB.Time_Window)-> [any Media]?{
         let decoder = JSONDecoder()
         guard let rawData = self.data(forKey: "\(media.rawValue)\(time.rawValue)") else { return nil }
         switch media{
@@ -21,7 +21,7 @@ extension UserDefaults{
             guard let rawMediaList = try? decoder.decode([MediaElement].self, from: rawData) else {
                 return nil
             }
-            let mediaList:[Media] = rawMediaList.compactMap { element in
+            let mediaList:[any Media] = rawMediaList.compactMap { element in
                 switch element.type{
                 case .movie:
                     guard let media = try? decoder.decode(Movie.self, from:element.data) else {return nil}
@@ -42,7 +42,7 @@ extension UserDefaults{
             return dataDecoded
         }
     }
-    func setTrend(media: TMDB.MediaType,time: TMDB.Time_Window,data:[Media]){
+    func setTrend(media: TMDB.MediaType,time: TMDB.Time_Window,data:[any Media]){
         switch media{
         case .all:
             let mediaList:[MediaElement] = data.compactMap { media in
@@ -70,3 +70,54 @@ extension UserDefaults{
         }
     }
 }
+//MARK: --  현재 트렌드 미디어 타입
+extension UserDefaults{
+    var mediaType: TMDB.MediaType?{
+        get{
+            guard let str = self.string(forKey: "mediaType") else {return nil}
+            return TMDB.MediaType(rawValue: str)
+        }
+        set{
+            guard let newValue,let mediaType, newValue != mediaType else {return}
+            self.set(newValue.rawValue, forKey: "mediaType")
+        }
+    }
+}
+//MARK: -- 트렌드 시간 타입
+extension UserDefaults{
+    var timeType: TMDB.Time_Window?{
+        get{
+            guard let str = self.string(forKey: "timeType") else {return nil}
+            return TMDB.Time_Window(rawValue: str)
+        }
+        set{
+            guard let newValue,let timeType, newValue != timeType else {return}
+            self.set(newValue.rawValue, forKey: "timeType")
+        }
+    }
+}
+//MARK: -- 마지막에 저장한 날짜
+extension UserDefaults{
+    var lastDay:Date?{
+        get{
+            let formatter = DateFormatter()
+            formatter.dateFormat = Date.dayFormatString
+            guard let str =  self.string(forKey: "day"),
+                  let date = formatter.date(from: str) else { return nil }
+            return date
+        }
+        set{
+            guard let newValue else { return }
+            self.set(newValue.day, forKey: "day")
+        }
+    }
+}
+//MARK: -- 저장된 주
+extension UserDefaults{
+    var lastWeek:String?{
+        guard let lastDay else {return nil}
+        return lastDay.getWeek
+    }
+}
+
+

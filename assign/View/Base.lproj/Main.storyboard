@@ -59,13 +59,13 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DN9-jF-xpp">
-                                            <rect key="frame" x="20.000000000000004" y="11.999999999999998" width="43.333333333333343" height="20.333333333333329"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                            <rect key="frame" x="20" y="10" width="50" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZmM-eh-NJH">
-                                            <rect key="frame" x="238.33333333333337" y="0.0" width="138.66666666666663" height="44"/>
+                                            <rect key="frame" x="228" y="0.0" width="149" height="44"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="k5T-st-JW0">
                                                     <rect key="frame" x="0.0" y="6.6666666666666679" width="105" height="32"/>
@@ -75,16 +75,16 @@
                                                     </segments>
                                                 </segmentedControl>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9g-FE-R8q">
-                                                    <rect key="frame" x="112.99999999999997" y="0.0" width="25.666666666666657" height="44"/>
+                                                    <rect key="frame" x="113" y="0.0" width="36" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="dWc-vc-Bw0"/>
                                                     </constraints>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain">
                                                         <imageReference key="image" image="calendar.circle" catalog="system" symbolScale="large"/>
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="24" scale="small"/>
                                                         <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                        <color key="baseForegroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="baseForegroundColor" systemColor="tintColor"/>
                                                     </buttonConfiguration>
                                                 </button>
                                             </subviews>
@@ -112,7 +112,7 @@
                                         </constraints>
                                         <segments>
                                             <segment title="">
-                                                <imageReference key="image" image="popcorn" catalog="system" symbolScale="large"/>
+                                                <imageReference key="image" image="popcorn" catalog="system" symbolScale="large" variableValue="0.0"/>
                                             </segment>
                                             <segment title="">
                                                 <imageReference key="image" image="tv" catalog="system" symbolScale="large"/>
@@ -134,16 +134,16 @@
                                 <rect key="frame" x="0.0" y="103" width="393" height="44"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2022년 5월 첫째주" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsV-UI-3Zd">
-                                        <rect key="frame" x="20" y="11.999999999999998" width="135" height="20.333333333333329"/>
+                                        <rect key="frame" x="20" y="10" width="156.66666666666666" height="24"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RGh-vV-d4q">
-                                        <rect key="frame" x="238.33333333333337" y="0.0" width="138.66666666666663" height="44"/>
+                                        <rect key="frame" x="228" y="0.0" width="149" height="44"/>
                                         <subviews>
-                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="v1t-XQ-eo6">
+                                            <segmentedControl opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="v1t-XQ-eo6">
                                                 <rect key="frame" x="0.0" y="6.6666666666666714" width="105" height="32"/>
                                                 <segments>
                                                     <segment title="미디어"/>
@@ -151,16 +151,18 @@
                                                 </segments>
                                             </segmentedControl>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PcV-pm-TDv">
-                                                <rect key="frame" x="112.99999999999997" y="0.0" width="25.666666666666657" height="44"/>
+                                                <rect key="frame" x="113" y="0.0" width="36" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="RwZ-ni-w1A"/>
                                                 </constraints>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain">
                                                     <imageReference key="image" image="calendar.circle" catalog="system" symbolScale="large"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font" scale="large">
+                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    </preferredSymbolConfiguration>
                                                     <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
-                                                    <color key="baseForegroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="baseForegroundColor" systemColor="tintColor"/>
                                                 </buttonConfiguration>
                                             </button>
                                         </subviews>
@@ -197,11 +199,16 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
                         <outlet property="bottomView" destination="CPy-V7-yaU" id="SqY-MU-tq4"/>
-                        <outlet property="calenderBtn" destination="PcV-pm-TDv" id="ZCf-40-2N7"/>
                         <outlet property="headerView" destination="goK-d3-dcV" id="snG-MZ-SLO"/>
                         <outlet property="mediaSegmentControl" destination="zxc-ev-gTL" id="frD-Oh-IpD"/>
                         <outlet property="tableHeaderView" destination="kOX-Uv-rvd" id="zFx-sN-jeF"/>
                         <outlet property="tableView" destination="Ksw-G3-2yB" id="4VB-Ju-sKn"/>
+                        <outletCollection property="dateLabels" destination="jsV-UI-3Zd" collectionClass="NSMutableArray" id="XJr-XW-1mF"/>
+                        <outletCollection property="trendSegmentControl" destination="v1t-XQ-eo6" collectionClass="NSMutableArray" id="L1A-NU-aHm"/>
+                        <outletCollection property="dateTypeBtns" destination="i9g-FE-R8q" collectionClass="NSMutableArray" id="iNY-9q-ix0"/>
+                        <outletCollection property="dateTypeBtns" destination="PcV-pm-TDv" collectionClass="NSMutableArray" id="4SK-f8-HvK"/>
+                        <outletCollection property="dateLabels" destination="DN9-jF-xpp" collectionClass="NSMutableArray" id="fFF-kS-0I9"/>
+                        <outletCollection property="trendSegmentControl" destination="k5T-st-JW0" collectionClass="NSMutableArray" id="ZRU-j2-X0j"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IF1-WJ-RWV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -304,6 +311,9 @@
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

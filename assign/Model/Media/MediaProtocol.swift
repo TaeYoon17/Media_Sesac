@@ -6,7 +6,7 @@
 //
 
 import Foundation
-protocol Media:Codable{
+protocol Media:Codable,Equatable{
     var adult:Bool {get set}
     var backdropPath :String {get set}
     var id:Int {get set}
@@ -20,5 +20,5 @@ protocol Media:Codable{
     // 공통으로 갖지만 각자 다른 이름인 것
     var called:String {get}
     var originalCalled:String {get}
-    var publishDate:String {get}
+    var publishDate:String {get}   
 }

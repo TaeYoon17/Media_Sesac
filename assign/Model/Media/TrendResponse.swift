@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 struct TrendResponse{
     let page:Int
-    let results: [Media]
+    let results: [any Media]
     let totalPages:Int
     let totalResults:Int
     init(json:JSON){
