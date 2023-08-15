@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-class MainVC: UIViewController{
+class TrendVC: UIViewController{
 // 모델 뷰 바인딩
     let globalCache = Cache.shared
     lazy var mediaType:TMDB.MediaType = globalCache.mediaType{
@@ -53,10 +53,6 @@ class MainVC: UIViewController{
             self?.mediaList = list
         }
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.headerView.backgroundColor = .clear
-    }
     var prevY: CGFloat = 0.0
     let lineY:CGFloat = -143
     func configure(){
@@ -78,7 +74,7 @@ class MainVC: UIViewController{
     }
 }
 
-extension MainVC:UITableViewDelegate,UITableViewDataSource{
+extension TrendVC:UITableViewDelegate,UITableViewDataSource{
     func configureTableView(){
         tableView.tableFooterView = {
             let uiview = UIView(frame: .init(x: 0, y: 0, width: view.bounds.width, height: 64))
@@ -88,14 +84,15 @@ extension MainVC:UITableViewDelegate,UITableViewDataSource{
         self.tableView.delegate = self
         self.tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.register(.init(nibName: MainItemCell.identifier, bundle: nil), forCellReuseIdentifier: MainItemCell.identifier)
+        self.tableView.register(.init(nibName: TrendItemCell.identifier, bundle: nil), forCellReuseIdentifier: TrendItemCell.identifier)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.mediaList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let c = tableView.dequeueReusableCell(withIdentifier: MainItemCell.identifier) as? MainItemCell else {return .init()}
+        guard let c = tableView.dequeueReusableCell(withIdentifier: TrendItemCell.identifier)
+                as? TrendItemCell else {return .init()}
         c.selectionStyle = .none
         if let media = self.mediaList?[indexPath.row]{
             c.media = media
@@ -106,11 +103,22 @@ extension MainVC:UITableViewDelegate,UITableViewDataSource{
         return c
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let mediaItem = mediaList?[indexPath.row] else { return }
+        TMDB.Router.Credit(media: mediaItem.mediaType, id: mediaItem.mediaID)
+            .action { (res:CreditResponse) in
+                guard let vc = self.storyboard?.instantiateViewController(withIdentifier: MediaInfoVC.identifier) as? MediaInfoVC else {return}
+//                vc.res.cast
+                vc.cast = res.cast
+                vc.crew = res.crew
+                vc.media = mediaItem
+                self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        
         print("선택됨!! \(indexPath.row)")
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let nowY = scrollView.contentOffset.y
-//        print(nowY)
         if prevY <= lineY && nowY > lineY{
             DispatchQueue.main.async{
                 self.headerView.isHidden = false

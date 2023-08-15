@@ -10,7 +10,15 @@ import SwiftyJSON
 protocol Identifier{
     static var identifier:String{get}
 }
-protocol ConvertableJSON{
-    var id:Int {get set}
-    init(json:JSON)
+
+extension MediaInfoVC: Identifier{
+    static var identifier: String{
+        String(describing: MediaInfoVC.self)
+    }
+}
+
+extension TrendVC: Identifier{
+    static var identifier: String{
+        String(describing: TrendVC.self)
+    }
 }

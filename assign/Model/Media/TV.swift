@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-struct TV:Media,ConvertableJSON{
+struct TV:Media,Codable{
     //MARK: -- MediaProtocol
     var called: String {
         get{ name }
@@ -19,12 +19,11 @@ struct TV:Media,ConvertableJSON{
 //        set {originalName = newValue}
     }
     var publishDate: String {
-        get { firstAirDate}
-//        set { firstAirDate = newValue}
+        get { firstAirDate }
     }
     var adult:Bool
     var backdropPath :String
-    var id:Int
+    var mediaID:Int
     var originalLanguage:String
     var overview:String
     var posterPath:String
@@ -42,7 +41,7 @@ struct TV:Media,ConvertableJSON{
     init(json:JSON){
         self.adult = json["adult"].boolValue
         self.backdropPath = json["backdrop_path"].stringValue
-        self.id = json["id"].intValue
+        self.mediaID = json["id"].intValue
         self.name = json["name"].stringValue
         self.originalLanguage = json["original_language"].stringValue
         self.originalName = json["original_name"].stringValue
@@ -56,24 +55,21 @@ struct TV:Media,ConvertableJSON{
         self.voteAverage = json["vote_average"].doubleValue
         self.voteCount = json["vote_count"].intValue
     }
-//    init(
-//        adult:Bool,
-//        backdropPath :String,
-//        id:Int,
-//        title:String,
-//        originalLanguage:String,
-//        originalTitle :String,
-//        overview:String,
-//        posterPath:String,
-//        mediaType:TMDB.MediaType,
-//        genreIDS:[Int],
-//        popularity:Double,
-//        releaseDate:String,
-//        video: Bool,
-//        voteAverage:Double,
-//        voteCount:Int
-//    ){
-//        self.adult = adult
-//        self.backdropPath = backdropPath
-//    }
+    enum CodingKeys: String, CodingKey {
+        case adult
+        case backdropPath = "backdrop_path"
+        case mediaID = "id"
+        case name
+        case originalLanguage = "original_language"
+        case originalName = "original_name"
+        case overview
+        case posterPath = "poster_path"
+        case mediaType = "media_type"
+        case genreIDS = "genre_ids"
+        case popularity
+        case firstAirDate = "first_air_date"
+        case voteAverage = "vote_average"
+        case voteCount = "vote_count"
+        case originCountry = "origin_country"
+    }
 }

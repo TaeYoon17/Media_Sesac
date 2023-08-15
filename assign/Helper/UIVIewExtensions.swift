@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 extension UIView{
-    func getBlur(style: UIBlurEffect.Style,corderRadius: CGFloat = 8){
-        self.backgroundColor = .clear
+    func getBlur(style: UIBlurEffect.Style,corderRadius: CGFloat = 8,backgroundColor: UIColor = .clear){
+        self.backgroundColor = backgroundColor
         let effect = UIBlurEffect(style: .regular)
         let visualView = UIVisualEffectView(effect: effect)
         visualView.isUserInteractionEnabled = false

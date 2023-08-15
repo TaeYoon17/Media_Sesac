@@ -34,7 +34,6 @@ extension UserDefaults{
             }
             return mediaList
         case .movie:
-            let type = [Movie.self]
             guard let dataDecoded = try? decoder.decode([Movie].self, from: rawData) else { return nil }
             return dataDecoded
         case .tv:

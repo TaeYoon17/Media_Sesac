@@ -11,18 +11,19 @@ import SwiftyJSON
 extension TMDB{
     enum Router:RouterProtocol{
         static var baseURL: String{ "https://api.themoviedb.org/3"}
-        case Trend(media:TMDB.MediaType,date:TMDB.Time_Window),Credit
+        case Trend(media:TMDB.MediaType,date:TMDB.Time_Window)
+        case Credit(media:TMDB.MediaType,id:Int)
         var endPoint:String{
             switch self{
-            case .Credit: return ""
+            case let .Credit(media,id):
+                return "/\(media.rawValue)/\(id)/credits?language=en-US"
             case let .Trend(media,date):
                 return "/trending/\(media.rawValue)/\(date.rawValue)?language=en-US"
             }
         }
         var method: HTTPMethod{
             switch self{
-            case .Credit:return .get
-            case .Trend: return .get
+            case .Credit,.Trend:return .get
             }
         }
         var headers: HTTPHeaders{
@@ -35,28 +36,34 @@ extension TMDB{
         }
         var params: Parameters?{
             switch self{
-            case .Credit: return nil
-            case .Trend:
-                return nil
+            case .Credit,.Trend: return nil
             }
         }
         
-        func action(successCompletion:@escaping (JSON) -> Void
-                    ,failHandler: ((AFError) ->Void)? = nil){
-            AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
-                .validate(statusCode: 200...300)
-                .responseJSON{ val in
-                    switch val.result{
-                    case .success(let data):
-                        let json = JSON(data)
-//                        print(json)
-                        successCompletion(json)
-                    case .failure(let err):
-//                        print(err)
-                        guard let failHandler else {return}
-                        failHandler(err)
-                    }
+        func action<T:Codable>(successCompletion:@escaping (T) -> Void
+                               ,failHandler: (() ->Void)? = nil){
+            let afRequest = AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
+            afRequest.responseDecodable(of: T.self){ response in
+                guard let value = response.value else {
+                    if let failHandler{ failHandler()}
+                    return
                 }
+                successCompletion(value)
+            }
+            //MARK: -- Legacy SwiftyJSON
+            //                afRequest
+            //                    .validate(statusCode: 200...300)
+            //                    .responseJSON{ val in
+            //                        switch val.result{
+            //                        case .success(let data):
+            //                            let json = JSON(data)
+            //                            successCompletion(json)
+            //                        case .failure(let err):
+            //                            guard let failHandler else {return}
+            //                            failHandler(err)
+            //                        }
+            //                    }
+            
         }
     }
 }

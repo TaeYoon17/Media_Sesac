@@ -45,7 +45,7 @@ extension TMDB{
 //MARK: -- 장르 관련 데이터
 extension TMDB{
     enum Genre{
-        private static var movieGenreTable = [
+        private static var movieGenreTable:[Int:String] = [
             "Action":28,"Adventure":12,"Animation":16,"Comedy":35,"Crime":80,"Documentary":99,
             "Drama":18,"Family":10751,"Fantasy":14,"History":36,"Horror":27,"Music":10402,
             "Mystery":9648,"Romance":10749,"Science Fiction":878,"TV Movie":10770,"Thriller":53,
@@ -65,5 +65,22 @@ extension TMDB{
             default: return "장르를 찾을 수 없습니다."
             }
         }
+    }
+}
+
+extension TMDB{
+    enum Department: String, Codable {
+        case acting = "Acting"
+        case art = "Art"
+        case camera = "Camera"
+        case costumeMakeUp = "Costume & Make-Up"
+        case crew = "Crew"
+        case directing = "Directing"
+        case editing = "Editing"
+        case lighting = "Lighting"
+        case production = "Production"
+        case sound = "Sound"
+        case visualEffects = "Visual Effects"
+        case writing = "Writing"
     }
 }

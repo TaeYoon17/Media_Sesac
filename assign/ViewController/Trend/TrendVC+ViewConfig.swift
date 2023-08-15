@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 //MARK: -- 블러 설정
-extension MainVC{
+extension TrendVC{
     func configureBlur(){
         DispatchQueue.main.async {
             self.headerView.getBlur(style: .prominent, corderRadius: 0)
@@ -20,7 +20,7 @@ extension MainVC{
 
 
 //MARK: -- 주,일 버튼 설정
-extension MainVC{
+extension TrendVC{
     func configureCalenderBtn(){
         self.dateTypeBtns.forEach {
             $0.showsMenuAsPrimaryAction = true
@@ -37,7 +37,7 @@ extension MainVC{
     }
 }
 //MARK: -- 세그먼트컨트롤러 설정
-extension MainVC{
+extension TrendVC{
     func configureSegmentController(){
         self.mediaSegmentControl.selectedSegmentIndex = self.mediaType.idx
         self.mediaSegmentControl.getBlur(style: .prominent)

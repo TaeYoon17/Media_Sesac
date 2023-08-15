@@ -7,7 +7,7 @@
 
 import UIKit
 import Kingfisher
-class MainItemCell: UITableViewCell {
+class TrendItemCell: UITableViewCell {
     //Just View
     let baseImgURL = "https://image.tmdb.org/t/p/w300"
     @IBOutlet weak var shadowView: UIView!
@@ -20,11 +20,11 @@ class MainItemCell: UITableViewCell {
     @IBOutlet weak var clipBtn: UIButton!
     @IBOutlet weak var peoplesLabel: UILabel!
     @IBOutlet weak var ratingBtn: UIButton!
-    static let identifier = String(describing: MainItemCell.self)
+    static let identifier = String(describing: TrendItemCell.self)
     var media:(any Media)?{
         didSet{
             guard let media else {return}
-            if let oldValue, media.id == oldValue.id{ return }
+            if let oldValue, media.mediaID == oldValue.mediaID{ return }
             if let genreId = media.genreIDS.first{
                 genreLabel.text = "# \(media.mediaType.getGenre(id: genreId))"
             }
