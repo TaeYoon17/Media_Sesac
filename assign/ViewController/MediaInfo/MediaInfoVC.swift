@@ -8,15 +8,14 @@
 import UIKit
 
 class MediaInfoVC: UIViewController{
-    enum PeopleType{
-        case cast,crew
-    }
+    enum PeopleType:Int,CaseIterable{ case cast,crew }
     //Model
     var media:(any Media)?
     var cast :[Credit]?
     var crew :[Credit]?
     //ViewController
     var loadCompletion:(()->Void)?
+    @IBOutlet weak var popBtn: UIButton!
     //View
     @IBOutlet weak var backImgView: UIImageView!
     @IBOutlet weak var tableView: UITableView!

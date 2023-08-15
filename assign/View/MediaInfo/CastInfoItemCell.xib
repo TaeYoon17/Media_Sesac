@@ -33,8 +33,9 @@
                             </label>
                         </subviews>
                     </stackView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SwiftUI" translatesAutoresizingMaskIntoConstraints="NO" id="zjb-SN-ZNy">
-                        <rect key="frame" x="20.000000000000007" y="10" width="91.666666666666686" height="122"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="zjb-SN-ZNy">
+                        <rect key="frame" x="20.000000000000007" y="11.666666666666664" width="91.666666666666686" height="119.33333333333334"/>
+                        <color key="tintColor" cyan="0.038413561880000002" magenta="0.010122782550000001" yellow="0.012843396510000001" black="0.065690665410000001" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="zjb-SN-ZNy" secondAttribute="height" multiplier="3:4" id="JC0-Oo-shA"/>
                         </constraints>
@@ -59,6 +60,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="SwiftUI" width="96" height="96"/>
+        <image name="person" catalog="system" width="128" height="121"/>
     </resources>
 </document>

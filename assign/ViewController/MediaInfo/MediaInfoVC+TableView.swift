@@ -11,17 +11,50 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
     func configureTableView(){
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.sectionHeaderTopPadding = 0 // 섹션 헤더 패딩 없애기
         self.setHeaderUI()
         self.bindingHeaderData()
         self.tableView.register(.init(nibName: CastInfoItemCell.identifier, bundle: nil),
                                 forCellReuseIdentifier: CastInfoItemCell.identifier)
     }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        PeopleType.allCases.count
+    }
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let type = PeopleType(rawValue: section) else {return nil}
+        switch type{
+        case .cast: return "연기자"
+        case .crew: return "제작진"
+        }
+    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = UIView()
+//        view.backgroundColor = .white
+//        let label = UILabel(frame: .init(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
+//        label.textColor = .black
+//        label.text = "연기자"
+//        view.addSubview(label)
+//        return view
+//    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CastInfoItemCell.identifier) as? CastInfoItemCell else {return .init()}
+        guard let type = PeopleType(rawValue: indexPath.section) else {return cell}
+        switch type{
+        case .cast:
+            cell.credit = self.cast?[indexPath.row]
+        case .crew:
+            cell.credit = self.crew?[indexPath.row]
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
+        let type = PeopleType(rawValue: section)
+        switch type{
+        case .cast: return cast?.count ?? 0
+        case .crew: return crew?.count ?? 0
+        case .none: return 0
+        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 84    }
@@ -31,13 +64,18 @@ fileprivate extension MediaInfoVC{
     func setHeaderUI(){
         let gradient = CAGradientLayer()
         gradient.colors = [UIColor.clear.cgColor, UIColor.init(white: 0, alpha: 0.6).cgColor]
+        
+        tableView.tableHeaderView = headerView
         DispatchQueue.main.async {[weak self] in
             guard let self else {return}
-            let halfHeight = headerView.bounds.height * 0.5
-            gradient.frame = .init(x: 0, y: headerView.bounds.height - halfHeight, width: headerView.bounds.width, height: halfHeight)
-//            imgBlurView.frame = headerView.frame
+            let ySuper = self.headerView.convert(headerView.bounds.origin, to: self.view).y
+            let myHeight = backImgView.bounds.height - ySuper
+            let halfHeight = myHeight * 0.5
+            headerView.frame = .init(x: 0, y: 0, width: backImgView.bounds.width, height: myHeight)
+            imgBlurView.frame = backImgView.frame
+            gradient.frame = .init(x: 0, y: myHeight - halfHeight, width: headerView.bounds.width, height: halfHeight)
             headerView.layer.insertSublayer(gradient, at: 0)
-            tableView.tableHeaderView = headerView
+            self.tableView.reloadData()
         }
         let prevBtnStatus: () -> Bool = {
             var isTapped = false

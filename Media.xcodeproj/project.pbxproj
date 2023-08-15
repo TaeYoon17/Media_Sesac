@@ -18,6 +18,7 @@
 		635495192A8B5ADB00E9DDCE /* CastInfoItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635495172A8B5ADB00E9DDCE /* CastInfoItemCell.swift */; };
 		6354951A2A8B5ADB00E9DDCE /* CastInfoItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 635495182A8B5ADB00E9DDCE /* CastInfoItemCell.xib */; };
 		6354951C2A8B6AC400E9DDCE /* MediaInfoVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354951B2A8B6AC400E9DDCE /* MediaInfoVC+TableView.swift */; };
+		6354951E2A8BA5E400E9DDCE /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6354951D2A8BA5E400E9DDCE /* URLExtensions.swift */; };
 		6355C6482A89C2F500579712 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355C6472A89C2F500579712 /* Cache.swift */; };
 		6355C64A2A89DA0400579712 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355C6492A89DA0400579712 /* DateExtensions.swift */; };
 		6355C6512A8A02B200579712 /* TrendVC+ViewConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355C6502A8A02B200579712 /* TrendVC+ViewConfig.swift */; };
@@ -56,6 +57,7 @@
 		635495172A8B5ADB00E9DDCE /* CastInfoItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastInfoItemCell.swift; sourceTree = "<group>"; };
 		635495182A8B5ADB00E9DDCE /* CastInfoItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CastInfoItemCell.xib; sourceTree = "<group>"; };
 		6354951B2A8B6AC400E9DDCE /* MediaInfoVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MediaInfoVC+TableView.swift"; sourceTree = "<group>"; };
+		6354951D2A8BA5E400E9DDCE /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		6355C6472A89C2F500579712 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		6355C6492A89DA0400579712 /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		6355C6502A8A02B200579712 /* TrendVC+ViewConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrendVC+ViewConfig.swift"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				63FD5EE92A8620FB009BC89F /* IdentifierHelper.swift */,
+				6354951D2A8BA5E400E9DDCE /* URLExtensions.swift */,
 				635EE7512A868D5A009E66F5 /* UserDefaultsHelper.swift */,
 				634386102A87C52200184619 /* UIVIewExtensions.swift */,
 				6355C6492A89DA0400579712 /* DateExtensions.swift */,
@@ -351,6 +354,7 @@
 				635495192A8B5ADB00E9DDCE /* CastInfoItemCell.swift in Sources */,
 				6354950E2A8B2F4500E9DDCE /* CreditResponse.swift in Sources */,
 				635EE7562A876B40009E66F5 /* TV.swift in Sources */,
+				6354951E2A8BA5E400E9DDCE /* URLExtensions.swift in Sources */,
 				635EE7502A868B8B009E66F5 /* TrendResponse.swift in Sources */,
 				635EE7542A8766EF009E66F5 /* MediaProtocol.swift in Sources */,
 				6355C6482A89C2F500579712 /* Cache.swift in Sources */,
