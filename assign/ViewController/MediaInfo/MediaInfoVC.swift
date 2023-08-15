@@ -38,6 +38,11 @@ class MediaInfoVC: UIViewController{
         print(media)
         loadCompletion?()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+//        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
 }
 
 
