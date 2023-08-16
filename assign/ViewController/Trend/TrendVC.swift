@@ -23,6 +23,7 @@ class TrendVC: UIViewController{
             guard timeType != oldValue else {return}
             globalCache.timeType = timeType
             mediaList = globalCache.getMediaList
+            self.navigationItem.title = navTitle
             self.configureDateLabel()
         }
     }
@@ -33,7 +34,10 @@ class TrendVC: UIViewController{
             self.tableView.reloadData()
         }
     }
-    
+    let timeKoreanTable = [TMDB.Time_Window.day: "일별",.week:"주간"]
+    var navTitle:String{
+        "\(timeKoreanTable[timeType] ?? "") 트렌드"
+    }
     
     @IBOutlet var dateTypeBtns: [UIButton]!
     @IBOutlet var trendSegmentControl: [UISegmentedControl]!
@@ -53,9 +57,15 @@ class TrendVC: UIViewController{
             self?.mediaList = list
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(#function)
+        self.navigationItem.title = navTitle
+    }
     var prevY: CGFloat = 0.0
     let lineY:CGFloat = -143
     func configure(){
+        self.navigationItem.title = navTitle
         self.configureDateLabel()
         self.configureTableView()
         self.configureBlur()
@@ -111,6 +121,8 @@ extension TrendVC:UITableViewDelegate,UITableViewDataSource{
                 vc.cast = res.cast
                 vc.crew = res.crew
                 vc.media = mediaItem
+//                vc.navigationItem.backBarButtonItem?.title = ""
+                self.navigationController?.navigationBar.topItem?.title = ""
                 self.navigationController?.pushViewController(vc, animated: true)
         }
         
@@ -126,7 +138,6 @@ extension TrendVC:UITableViewDelegate,UITableViewDataSource{
         }else if prevY < lineY{
             DispatchQueue.main.async {
                 self.headerView.isHidden = true
-                //                self.tableHeaderView.backgroundColor = .white
             }
         }
         

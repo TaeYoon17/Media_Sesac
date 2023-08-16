@@ -10,7 +10,7 @@ class Cache{ // 램에서 노는 친구
     typealias T_Window = TMDB.Time_Window
     typealias M_Type = TMDB.MediaType
     static let shared:Cache = Cache()
-//    var week = "2022년 8월 22일"
+    //    var week = "2022년 8월 22일"
     var timeType: TMDB.Time_Window{
         didSet{ UserDefaults.standard.timeType = timeType }
     }
@@ -21,14 +21,14 @@ class Cache{ // 램에서 노는 친구
         didSet{
             guard let trendFetchCompletion,
                   let data = trendMedias[Two(values: (timeType,mediaType))],
-            trendMedias.count != T_Window.allCases.count * M_Type.allCases.count
+                  trendMedias.count != T_Window.allCases.count * M_Type.allCases.count
             else {return}
-            trendFetchCompletion(data)
+            DispatchQueue.main.async { trendFetchCompletion(data) }
         }
     }
     var trendFetchCompletion:(([any Media])->Void)?
     var getMediaList:[any Media]?{
-//        여기에서 날짜 확인하고 업데이트 해야한다.
+        //        여기에서 날짜 확인하고 업데이트 해야한다.
         self.trendMedias[Two(values: (timeType,mediaType))]
     }
     private init(){
@@ -51,38 +51,43 @@ class Cache{ // 램에서 노는 친구
 extension Cache{
     private func initTrends(){
         let userDefaults = UserDefaults.standard
-        let nowDay = Date()
-        let nowWeek = nowDay.getWeek
+        let nowDay = Date().day
+        let nowWeek = Date().getWeek
         let saveTrends: (Two<T_Window,M_Type>) -> Void = { val in
             let (t,m) = val.values
-//            TMDB.Router.Trend(media: m, date:t).action { json in
-//                let data = TrendResponse(json: json).results
-//                self.trendMedias[val] = data
-//                userDefaults.setTrend(media: m, time: t, data: data)
-//            }
-            TMDB.Router.Trend(media: m, date: t).action{ (res:TrendResponse) in
+            TMDB.Router.Trend(media: m, date: t).action(queue: .global()){ (res:TrendResponse) in
                 self.trendMedias[val] = res.results
                 userDefaults.setTrend(media: m, time: t, data: res.results)
             }
         }
         self.trendMedias = [:]
-        T_Window.allCases.forEach { t in M_Type.allCases.forEach { m in
-            let two = Two(values: (t, m))
-            switch t{
-            case .day:
-                if let lastDay = userDefaults.lastDay, lastDay == nowDay{
-                    trendMedias[two] = userDefaults.getTrend(media: m, time: t)
-                }else{
-                    saveTrends(two)
-                }
-            case .week:
-                if let lastWeek = userDefaults.lastWeek, let nowWeek, nowWeek == lastWeek{
-                    trendMedias[two] = userDefaults.getTrend(media: m, time: t)
-                }else{
-                    saveTrends(two)
+        //MARK: -- 처음에 API 불리는 곳
+        DispatchQueue.global().async {
+            T_Window.allCases.forEach { t in M_Type.allCases.forEach { m in
+                let two = Two(values: (t, m))
+                switch t{
+                case .day:
+                    if let lastDay = userDefaults.lastDay, lastDay == nowDay,
+                       let media = userDefaults.getTrend(media: m, time: t){
+                        self.trendMedias[two] = media
+                    }else{
+                        print("API_Router Called - day")
+                        saveTrends(two)
+                        userDefaults.lastDay = nowDay
+                    }
+                case .week:
+                    if let lastWeek = userDefaults.lastWeek, let nowWeek, nowWeek == lastWeek
+                        ,let media = userDefaults.getTrend(media: m, time: t){
+                        self.trendMedias[two] = media
+                    }else{
+                        print("API_Router Called - week")
+                        saveTrends(two)
+                        userDefaults.lastWeek = nowWeek
+                    }
                 }
             }
-        } }
+            }
+        }
     }
     func updateTrends(){ }
 }

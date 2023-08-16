@@ -52,7 +52,7 @@ extension UserDefaults{
                 print(#function,"인코딩 실패")
                 return
             }
-            print(#function,"변환 성공")
+//            print(#function,"변환 성공")
             self.setValue(encoded, forKey: "\(media.rawValue)\(time.rawValue)")
         case .movie:
             guard let casting = data as? [Movie],let encoded = try? JSONEncoder().encode(casting) else {
@@ -97,25 +97,26 @@ extension UserDefaults{
 }
 //MARK: -- 마지막에 저장한 날짜
 extension UserDefaults{
-    var lastDay:Date?{
+    var lastDay:String?{
         get{
-            let formatter = DateFormatter()
-            formatter.dateFormat = Date.dayFormatString
-            guard let str =  self.string(forKey: "day"),
-                  let date = formatter.date(from: str) else { return nil }
-            return date
+            return self.string(forKey: "day")
         }
         set{
             guard let newValue else { return }
-            self.set(newValue.day, forKey: "day")
+            self.set(newValue, forKey: "day")
         }
     }
 }
 //MARK: -- 저장된 주
 extension UserDefaults{
     var lastWeek:String?{
-        guard let lastDay else {return nil}
-        return lastDay.getWeek
+        get{
+            return self.string(forKey: "week")
+        }
+        set{
+            guard let newValue else {return}
+            self.set(newValue, forKey: "week")
+        }
     }
 }
 

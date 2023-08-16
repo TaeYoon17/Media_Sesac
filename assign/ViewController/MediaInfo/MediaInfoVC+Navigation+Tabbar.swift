@@ -15,8 +15,9 @@ extension MediaInfoVC{
 //        self.navigationItem.titleView?.backgroundColor = .clear
         self.navigationController?.navigationBar.scrollEdgeAppearance = .init()
         self.tabBarController?.tabBar.scrollEdgeAppearance = .init()
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem = .init(image: .init(systemName: "chevron.left"), style: .plain, target: self, action: #selector(Self.backBtnTapped))
+//        self.navigationItem.hidesBackButton = true
+//        self.navigationItem.leftBarButtonItem = .init(image: .init(systemName: "chevron.left"), style: .plain, target: self, action: #selector(Self.backBtnTapped))
+//        self.navigationController?.navigationBar.topItem?.title = ""
         self.popBtn.addTarget(self, action: #selector(Self.backBtnTapped), for: .touchUpInside)
     }
     @objc func backBtnTapped(){
