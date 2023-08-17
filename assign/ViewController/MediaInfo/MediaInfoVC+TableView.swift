@@ -21,28 +21,35 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         SectionType.allCases.count
     }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        guard let type = PeopleType(rawValue: section) else {return nil}
-//        switch type{
-//        case .cast: return "연기자"
-//        case .crew: return "제작진"
-//        }
-        guard let type = SectionType(rawValue: section) else {return nil}
+    //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    ////        guard let type = PeopleType(rawValue: section) else {return nil}
+    ////        switch type{
+    ////        case .cast: return "연기자"
+    ////        case .crew: return "제작진"
+    ////        }
+    //        guard let type = SectionType(rawValue: section) else {return nil}
+    //        switch type{
+    //        case .cast: return "연기자"
+    //        case .crew: return "제작진"
+    //        case .recommend: return "추천작"
+    //        }
+    //    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UILabel()
+        view.backgroundColor = .white
+        view.textColor = .black
+        var text = ""
+        guard let type = SectionType(rawValue: section) else {return view}
         switch type{
-        case .cast: return "연기자"
-        case .crew: return "제작진"
-        case .recommend: return "추천작"
+        case .cast: text = "연기자"
+        case .crew: text =  "제작진"
+        case .recommend: text = "추천작"
         }
+        view.text = "\t\(text)"
+        view.font = .boldSystemFont(ofSize: 24)
+        //        view.addSubview(label)
+        return view
     }
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .white
-//        let label = UILabel(frame: .init(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height))
-//        label.textColor = .black
-//        label.text = "연기자"
-//        view.addSubview(label)
-//        return view
-//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let type = SectionType(rawValue: indexPath.section) else {return .init()}
@@ -94,25 +101,25 @@ fileprivate extension MediaInfoVC{
         }
         var nowBtnStatus = false
         self.headerMoreBtn.addAction(.init(handler: {[weak self] _ in
-             UIView.animate(withDuration: 0.3,animations: { [weak self] in
-                 guard let self else {return}
-                  if !nowBtnStatus{ // 이전 것이 true였다. 더보기 false와 관련 설정
-                      headerMoreBtn.transform = CGAffineTransform(rotationAngle:  2 * .pi)
-                      descriptionLabel.numberOfLines = 3
-                      imgBlurView.alpha = 0
-                      DispatchQueue.main.asyncAfter(deadline: .now()+0.3){
-                          self.imgBlurView.isHidden = !nowBtnStatus
-                      }
-                  }else{ // 이전 것이 false였다. 더보기 true와 관련 설정
+            UIView.animate(withDuration: 0.3,animations: { [weak self] in
+                guard let self else {return}
+                if !nowBtnStatus{ // 이전 것이 true였다. 더보기 false와 관련 설정
+                    headerMoreBtn.transform = CGAffineTransform(rotationAngle:  2 * .pi)
+                    descriptionLabel.numberOfLines = 3
+                    imgBlurView.alpha = 0
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.3){
+                        self.imgBlurView.isHidden = !nowBtnStatus
+                    }
+                }else{ // 이전 것이 false였다. 더보기 true와 관련 설정
                     descriptionLabel.numberOfLines = 0
                     headerMoreBtn.transform = CGAffineTransform(rotationAngle: .pi)
                     imgBlurView.alpha = 1
                     imgBlurView.isHidden = !nowBtnStatus
-                  }
-                 nowBtnStatus.toggle()
-                 descriptionLabel.layoutIfNeeded()
-             })
-         }), for: .touchUpInside)
+                }
+                nowBtnStatus.toggle()
+                descriptionLabel.layoutIfNeeded()
+            })
+        }), for: .touchUpInside)
     }
     func bindingHeaderData(){
         let baseImgURL = "https://image.tmdb.org/t/p/w500"
