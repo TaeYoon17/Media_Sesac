@@ -16,15 +16,22 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
         self.bindingHeaderData()
         self.tableView.register(.init(nibName: CastInfoItemCell.identifier, bundle: nil),
                                 forCellReuseIdentifier: CastInfoItemCell.identifier)
+        self.tableView.register(.init(nibName: CollectionViewWrapperCell.identifier, bundle: nil), forCellReuseIdentifier: CollectionViewWrapperCell.identifier)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        PeopleType.allCases.count
+        SectionType.allCases.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let type = PeopleType(rawValue: section) else {return nil}
+//        guard let type = PeopleType(rawValue: section) else {return nil}
+//        switch type{
+//        case .cast: return "연기자"
+//        case .crew: return "제작진"
+//        }
+        guard let type = SectionType(rawValue: section) else {return nil}
         switch type{
         case .cast: return "연기자"
         case .crew: return "제작진"
+        case .recommend: return "추천작"
         }
     }
 //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -38,26 +45,34 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
 //    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CastInfoItemCell.identifier) as? CastInfoItemCell else {return .init()}
-        guard let type = PeopleType(rawValue: indexPath.section) else {return cell}
+        guard let type = SectionType(rawValue: indexPath.section) else {return .init()}
         switch type{
-        case .cast:
-            cell.credit = self.cast?[indexPath.row]
-        case .crew:
-            cell.credit = self.crew?[indexPath.row]
+        case .cast,.crew:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CastInfoItemCell.identifier) as? CastInfoItemCell else {return .init()}
+            cell.credit =  type == .cast ? self.cast?[indexPath.row] : self.crew?[indexPath.row]
+            return cell
+        case .recommend:
+            guard let c = tableView.dequeueReusableCell(withIdentifier: CollectionViewWrapperCell.identifier) as? CollectionViewWrapperCell else {return .init()}
+            c.recommendList = self.recommendMedia
+            return c
         }
-        return cell
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let type = PeopleType(rawValue: section)
+        guard let type = SectionType(rawValue: section) else {return 0}
         switch type{
         case .cast: return cast?.count ?? 0
         case .crew: return crew?.count ?? 0
-        case .none: return 0
+        case .recommend: return 1
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-84    }
+        guard let type = SectionType(rawValue: indexPath.section) else {return 0}
+        switch type{
+        case .cast,.crew: return 84
+        case .recommend: return self.tableView.bounds.width / 2.5
+        }
+    }
 }
 //MARK: -- 테이블 뷰 헤더 설정하기
 fileprivate extension MediaInfoVC{

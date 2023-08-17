@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RecommendItemCell" id="gTV-IL-0wX" customClass="RecommendItemCell" customModule="assign" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="359" height="676"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="359" height="676"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tN5-47-vAF">
+                        <rect key="frame" x="0.0" y="59" width="359" height="583"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SwiftUI" translatesAutoresizingMaskIntoConstraints="NO" id="QW2-pe-iFW">
+                                <rect key="frame" x="0.0" y="0.0" width="359" height="511"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QW2-pe-iFW" secondAttribute="height" multiplier="52:74" id="Xi6-4L-MbU"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="명량" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09v-BB-UYr">
+                                <rect key="frame" x="0.0" y="515" width="359" height="68"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="QW2-pe-iFW" firstAttribute="width" secondItem="tN5-47-vAF" secondAttribute="width" id="03l-fL-pzc"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="tN5-47-vAF" firstAttribute="top" secondItem="ZTg-uK-7eu" secondAttribute="top" id="eSj-QQ-oxh"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="tN5-47-vAF" secondAttribute="bottom" id="p3q-S3-1Qn"/>
+                <constraint firstItem="tN5-47-vAF" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" id="qfO-ct-A4l"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="tN5-47-vAF" secondAttribute="trailing" id="xyB-tx-4IF"/>
+            </constraints>
+            <size key="customSize" width="359" height="676"/>
+            <connections>
+                <outlet property="posterImgView" destination="QW2-pe-iFW" id="oF1-lr-ZHN"/>
+                <outlet property="titleLabel" destination="09v-BB-UYr" id="dL6-kh-Upk"/>
+            </connections>
+            <point key="canvasLocation" x="619" y="-108"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="SwiftUI" width="96" height="96"/>
+    </resources>
+</document>

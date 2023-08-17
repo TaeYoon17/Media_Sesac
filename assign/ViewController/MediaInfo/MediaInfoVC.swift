@@ -9,10 +9,29 @@ import UIKit
 
 class MediaInfoVC: UIViewController{
     enum PeopleType:Int,CaseIterable{ case cast,crew }
+    enum SectionType:Int,CaseIterable{
+        case recommend
+        case cast
+        case crew
+    }
     //Model
-    var media:(any Media)?
+    var media:(any Media)?{
+        didSet{
+            guard let media else {return}
+            TMDB.Router.Recommend(media: media.mediaType, id: media.mediaID, page: 1).action { [weak self] (response:MediaResponse) in
+                self?.recommendMedia = response.results
+            }
+        }
+    }
     var cast :[Credit]?
     var crew :[Credit]?
+    var recommendMedia :[any Media]?{
+        didSet{
+            guard let recommendMedia else { return }
+            self.tableView.reloadSections(IndexSet(SectionType.recommend.rawValue..<SectionType.cast.rawValue), with: .automatic)
+            
+        }
+    }
     //ViewController
     var loadCompletion:(()->Void)?
     @IBOutlet weak var popBtn: UIButton!
@@ -36,6 +55,7 @@ class MediaInfoVC: UIViewController{
         self.configureaNaviagtion()
         self.configureTableView()
         loadCompletion?()
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
