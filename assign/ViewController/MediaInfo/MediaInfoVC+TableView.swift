@@ -70,7 +70,7 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
         guard let type = SectionType(rawValue: indexPath.section) else {return 0}
         switch type{
         case .cast,.crew: return 84
-        case .recommend: return self.tableView.bounds.width / 2.5
+        case .recommend: return self.tableView.bounds.width / 2
         }
     }
 }

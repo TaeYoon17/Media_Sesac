@@ -27,9 +27,8 @@ class MediaInfoVC: UIViewController{
     var crew :[Credit]?
     var recommendMedia :[any Media]?{
         didSet{
-            guard let recommendMedia else { return }
-            self.tableView.reloadSections(IndexSet(SectionType.recommend.rawValue..<SectionType.cast.rawValue), with: .automatic)
-            
+            guard let recommendMedia,let tableView else { return }
+            tableView.reloadSections(IndexSet(SectionType.recommend.rawValue..<SectionType.cast.rawValue), with: .automatic)
         }
     }
     //ViewController
@@ -55,7 +54,7 @@ class MediaInfoVC: UIViewController{
         self.configureaNaviagtion()
         self.configureTableView()
         loadCompletion?()
-        
+        tableView.reloadSections(IndexSet(SectionType.recommend.rawValue..<SectionType.cast.rawValue), with: .automatic)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

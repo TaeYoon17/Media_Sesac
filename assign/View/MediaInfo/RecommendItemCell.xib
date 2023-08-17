@@ -19,7 +19,7 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tN5-47-vAF">
                         <rect key="frame" x="0.0" y="59" width="359" height="583"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SwiftUI" translatesAutoresizingMaskIntoConstraints="NO" id="QW2-pe-iFW">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="748" image="SwiftUI" translatesAutoresizingMaskIntoConstraints="NO" id="QW2-pe-iFW">
                                 <rect key="frame" x="0.0" y="0.0" width="359" height="511"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="QW2-pe-iFW" secondAttribute="height" multiplier="52:74" id="Xi6-4L-MbU"/>
