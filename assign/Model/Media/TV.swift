@@ -22,11 +22,11 @@ struct TV:Media,Codable{
         get { firstAirDate }
     }
     var adult:Bool
-    var backdropPath :String
+    var backdropPath :String?
     var mediaID:Int
     var originalLanguage:String
     var overview:String
-    var posterPath:String
+    var posterPath:String?
     var mediaType:TMDB.MediaType
     var genreIDS:[Int]
     var popularity:Double

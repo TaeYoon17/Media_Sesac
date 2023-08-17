@@ -55,7 +55,7 @@ extension Cache{
         let nowWeek = Date().getWeek
         let saveTrends: (Two<T_Window,M_Type>) -> Void = { val in
             let (t,m) = val.values
-            TMDB.Router.Trend(media: m, date: t).action(queue: .global()){ (res:TrendResponse) in
+            TMDB.Router.Trend(media: m, date: t).action(queue: .global()){ (res:MediaResponse) in
                 self.trendMedias[val] = res.results
                 userDefaults.setTrend(media: m, time: t, data: res.results)
             }

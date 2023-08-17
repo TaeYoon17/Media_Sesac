@@ -7,9 +7,9 @@
 
 import Foundation
 import SwiftyJSON
-struct TrendResponse:Codable{
+struct MediaResponse:Codable{
     let page:Int
-    let _results: [RawResult]
+    private let _results: [RawResult]
     var results: [any Media]{
         _results.map { rawResult in
             guard let da = try? JSONEncoder().encode(rawResult) else {fatalError("바꾸기 실패")}
@@ -22,7 +22,6 @@ struct TrendResponse:Codable{
             case .all:break
             }
             fatalError("여기 문제요")
-            return rawResult
         }
     }
     let totalPages:Int
@@ -42,7 +41,7 @@ struct TrendResponse:Codable{
     //        }
     //    }
     enum CodingKeys: String, CodingKey {
-        case page
+        case page = "page"
         case _results = "results"
         case totalPages = "total_pages"
         case totalResults = "total_results"
@@ -58,12 +57,13 @@ struct RawResult: Codable,Media {
     }
     
     var adult: Bool
-    var backdropPath: String
+    var backdropPath: String?
     var mediaID: Int
     var title: String?
     var originalLanguage: String
     var originalTitle: String?
-    var overview, posterPath: String
+    var overview: String
+    var posterPath: String?
     var mediaType: TMDB.MediaType
     var genreIDS: [Int]
     var popularity: Double

@@ -20,7 +20,8 @@ extension URL{
             return URL(string: baseImgURL + "/w500" + path)
         case .collection:
             return URL(string: baseImgURL + "/w300" + path)
-        case .poster: return nil
+        case .poster:
+            return URL(string: baseImgURL + "w220_and_h330_face" + path)
         case .list:
             return URL(string: baseImgURL + "/w92" + path)
         }

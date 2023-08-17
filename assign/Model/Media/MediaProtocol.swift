@@ -8,10 +8,10 @@
 import Foundation
 protocol Media:Codable,Equatable{
     var adult:Bool {get set}
-    var backdropPath :String {get set}
+    var backdropPath :String? {get set}
     var mediaID:Int {get set}
     var overview:String {get set}
-    var posterPath:String{get set}
+    var posterPath:String?{get set}
     var mediaType:TMDB.MediaType {get set}
     var genreIDS:[Int] {get set}
     var popularity:Double {get set}
@@ -21,6 +21,4 @@ protocol Media:Codable,Equatable{
     var called:String {get}
     var originalCalled:String {get}
     var publishDate:String {get}
-    
-
 }

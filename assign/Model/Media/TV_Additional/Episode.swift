@@ -13,7 +13,7 @@ struct Episode: Codable {
     let airDate: String
     let episodeNumber: Int
     let episodeType, productionCode: String
-    let runtime, seasonNumber, showID: Int
+    let runtime, seasonNumber, showID: Int?
     let stillPath: String
 
     enum CodingKeys: String, CodingKey {
@@ -30,7 +30,31 @@ struct Episode: Codable {
         case stillPath = "still_path"
     }
 }
-
+//struct Welcome: Codable {
+//    let voteAverage: Int
+//    let name, productionCode, airDate: String
+//    let showID: Int
+//    let overview, stillPath: String
+//    let runtime: JSONNull?
+//    let episodeType: String
+//    let seasonNumber, id, episodeNumber, voteCount: Int
+//
+//    enum CodingKeys: String, CodingKey {
+//        case voteAverage = "vote_average"
+//        case name
+//        case productionCode = "production_code"
+//        case airDate = "air_date"
+//        case showID = "show_id"
+//        case overview
+//        case stillPath = "still_path"
+//        case runtime
+//        case episodeType = "episode_type"
+//        case seasonNumber = "season_number"
+//        case id
+//        case episodeNumber = "episode_number"
+//        case voteCount = "vote_count"
+//    }
+//}
 
 struct EpisodeDetail: Codable {
     enum EpisodeType: String, Codable {

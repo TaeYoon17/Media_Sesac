@@ -35,7 +35,6 @@ class MediaInfoVC: UIViewController{
         super.viewDidLoad()
         self.configureaNaviagtion()
         self.configureTableView()
-        print(media)
         loadCompletion?()
     }
     override func viewWillDisappear(_ animated: Bool) {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 // MARK: - Welcome
 struct TVDetail: Codable {
     //MARK: -- 공통 부분
@@ -40,6 +41,7 @@ struct TVDetail: Codable {
     let numberOfEpisodes, numberOfSeasons: Int
 
     enum CodingKeys: String, CodingKey {
+        
         case adult
         case backdropPath = "backdrop_path"
         case createdBy = "created_by"

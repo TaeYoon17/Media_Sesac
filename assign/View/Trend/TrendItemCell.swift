@@ -35,7 +35,7 @@ class TrendItemCell: UITableViewCell {
             let text = String(format: "%.2f", media.voteAverage)
             let rating = NSAttributedString(string: text,attributes: [.font: UIFont.systemFont(ofSize: 14)])
             ratingBtn.setAttributedTitle(rating, for: .normal)
-            self.posterImgView.kf.setImage(with: URL(string: baseImgURL + media.backdropPath))
+            self.posterImgView.kf.setImage(with: URL(string: baseImgURL + (media.backdropPath ?? "")))
 //            ratingBtn.setTitle(String(format: "%.2f", media.voteAverage), for: .normal)
         }
     }

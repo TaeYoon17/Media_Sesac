@@ -11,9 +11,21 @@ class ExVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        TMDB.Router.Recommend(media: .tv, id: 113962, page: 1).action { (res:MediaResponse) in
+//            print(res)
+//        }
+        TMDB.Router.Recommend(media: .movie, id: 976573, page: 1).action { (res:MediaResponse) in
+            print(res)
+        }
+    }
+    
+    
+    func getEpisode(){
         TMDB.Router.Detail(media: .tv, id: API_Key.sampleTVID)
             .action { (res:TVDetail) in
                 let seasons = res.seasons
+                print(res.nextEpisodeToAir)
+                print(res.lastEpisodeToAir)
                 seasons.forEach { season in
                     let id = season.seasonID
                     let number = season.seasonNumber

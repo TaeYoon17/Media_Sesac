@@ -61,10 +61,10 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
 }
 //MARK: -- 테이블 뷰 헤더 설정하기
 fileprivate extension MediaInfoVC{
+    @MainActor
     func setHeaderUI(){
         let gradient = CAGradientLayer()
         gradient.colors = [UIColor.clear.cgColor, UIColor.init(white: 0, alpha: 0.6).cgColor]
-        
         tableView.tableHeaderView = headerView
         DispatchQueue.main.async {[weak self] in
             guard let self else {return}
@@ -77,32 +77,24 @@ fileprivate extension MediaInfoVC{
             headerView.layer.insertSublayer(gradient, at: 0)
             self.tableView.reloadData()
         }
-        let prevBtnStatus: () -> Bool = {
-            var isTapped = false
-            let isTappedFn = {
-                let prev = isTapped
-                isTapped.toggle()
-                return prev
-            }
-            return isTappedFn
-        }()
-         self.headerMoreBtn.addAction(.init(handler: {[weak self] _ in
-             let prevStatus = prevBtnStatus()
+        var nowBtnStatus = false
+        self.headerMoreBtn.addAction(.init(handler: {[weak self] _ in
              UIView.animate(withDuration: 0.3,animations: { [weak self] in
                  guard let self else {return}
-                  if prevStatus{ // 이전 것이 true였다. 더보기 false와 관련 설정
+                  if !nowBtnStatus{ // 이전 것이 true였다. 더보기 false와 관련 설정
                       headerMoreBtn.transform = CGAffineTransform(rotationAngle:  2 * .pi)
                       descriptionLabel.numberOfLines = 3
                       imgBlurView.alpha = 0
                       DispatchQueue.main.asyncAfter(deadline: .now()+0.3){
-                          self.imgBlurView.isHidden = prevStatus
+                          self.imgBlurView.isHidden = !nowBtnStatus
                       }
                   }else{ // 이전 것이 false였다. 더보기 true와 관련 설정
                     descriptionLabel.numberOfLines = 0
                     headerMoreBtn.transform = CGAffineTransform(rotationAngle: .pi)
                     imgBlurView.alpha = 1
-                    imgBlurView.isHidden = prevStatus
+                    imgBlurView.isHidden = !nowBtnStatus
                   }
+                 nowBtnStatus.toggle()
                  descriptionLabel.layoutIfNeeded()
              })
          }), for: .touchUpInside)
@@ -111,6 +103,10 @@ fileprivate extension MediaInfoVC{
         let baseImgURL = "https://image.tmdb.org/t/p/w500"
         self.descriptionLabel.text = self.media?.overview
         self.calledLabel.text = self.media?.called
-        self.backImgView.kf.setImage(with:  URL(string: baseImgURL + self.media!.posterPath))
+        if let backPath = self.media?.posterPath, let url = URL(string: baseImgURL + backPath){
+            self.backImgView.kf.setImage(with: url)
+        }else{
+            self.backImgView.image = UIImage(named: "picture_demo")
+        }
     }
 }

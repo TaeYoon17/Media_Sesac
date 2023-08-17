@@ -14,6 +14,7 @@ extension TMDB{
         case Trend(media:TMDB.MediaType,date:TMDB.Time_Window)
         case Credit(media:TMDB.MediaType,id:Int)
         case Detail(media:TMDB.MediaType,id:Int)
+        case Recommend(media: TMDB.MediaType,id:Int,page:Int)
         var endPoint:String{
             switch self{
             case let .Credit(media,id):
@@ -22,24 +23,28 @@ extension TMDB{
                 return "/trending/\(media.rawValue)/\(date.rawValue)?language=en-US"
             case let .Detail(media: media,id:id):
                 return "/\(media.rawValue)/\(id)?language=en-US"
+            case let .Recommend(media: m, id: i, page: p):
+//            https://api.themoviedb.org/3/tv/113962/recommendations?language=en-US&page=1';
+                return "/\(m.rawValue)/\(i)/recommendations?language=en-US&page=\(p)"
+                
             }
         }
         var method: HTTPMethod{
             switch self{
-            case .Credit,.Trend,.Detail:return .get
+            case .Credit,.Trend,.Detail,.Recommend:return .get
             }
         }
         var headers: HTTPHeaders{
             var headers = HTTPHeaders()
             switch self{
-            case .Credit,.Trend,.Detail:
+            case .Credit,.Trend,.Detail,.Recommend:
                 headers["Authorization"] = "Bearer \(API_Key.TMDB_ACCESS_TOKEN)"
                 return headers
             }
         }
         var params: Parameters?{
             switch self{
-            case .Credit,.Trend,.Detail: return nil
+            case .Credit,.Trend,.Detail,.Recommend: return nil
             }
         }
         
@@ -57,6 +62,12 @@ extension TMDB{
                         successCompletion(value)
                     }
                 }
+        }
+        func jsonAction(){
+            let afRequest = AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers).responseJSON { res in
+                let json = JSON(res.data)
+                print(json)
+            }
         }
         //MARK: -- Legacy SwiftyJSON
         //                afRequest
@@ -76,9 +87,7 @@ extension TMDB{
 
 extension TMDB.Router{
     enum TV:RouterProtocol{
-        static var baseURL: String{
-            TMDB.Router.baseURL + "/tv"
-        }
+        static var baseURL: String{ TMDB.Router.baseURL + "/tv" }
         case season(seriesID: Int,seasonNumber: Int)
         case episodes
         var endPoint: String{
