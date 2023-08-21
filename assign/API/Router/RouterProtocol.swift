@@ -19,8 +19,7 @@ protocol RouterProtocol{
 extension RouterProtocol{
     func action<T:Codable>(queue: DispatchQueue,successCompletion:@escaping (T) -> Void,failHandler: (() ->Void)?){
         let afRequest = AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
-        afRequest
-            .responseDecodable(of: T.self,queue: .global()){ response in
+        afRequest.responseDecodable(of: T.self,queue: .global()){ response in
                 queue.async {
                     guard let value = response.value else {
                         print(response.description)

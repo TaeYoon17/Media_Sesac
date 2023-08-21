@@ -6,17 +6,31 @@
 //
 
 import Foundation
+@propertyWrapper // 값 변화를 옵저빙하는 객체를 만듦
+struct DefaultsState<Value>{
+    private var path: ReferenceWritableKeyPath<UserDefaults,Value>
+    var wrappedValue: Value{
+        get{ UserDefaults.standard[keyPath: path] }
+        set{ UserDefaults.standard[keyPath: path] = newValue }
+    }
+    init(_ location:ReferenceWritableKeyPath<UserDefaults,Value>){
+        self.path = location
+    }
+}
 class Cache{ // 램에서 노는 친구
     typealias T_Window = TMDB.Time_Window
     typealias M_Type = TMDB.MediaType
     static let shared:Cache = Cache()
     //    var week = "2022년 8월 22일"
-    var timeType: TMDB.Time_Window{
-        didSet{ UserDefaults.standard.timeType = timeType }
-    }
-    var mediaType: TMDB.MediaType{
-        didSet{ UserDefaults.standard.mediaType = mediaType }
-    }
+    @DefaultsState(\.mediaType) var mediaType
+    @DefaultsState(\.timeType) var timeType
+// MARK: -- Legacy 직접 UserDefaults의 값을 접근해서 바꿈
+//    var timeType: TMDB.Time_Window{
+//        didSet{ UserDefaults.standard.timeType = timeType }
+//    }
+//    var mediaType: TMDB.MediaType{
+//        didSet{ UserDefaults.standard.mediaType = mediaType }
+//    }
     private var trendMedias:[Two<T_Window,M_Type>:[any Media]] = [:]{
         didSet{
             guard let trendFetchCompletion,
@@ -29,21 +43,22 @@ class Cache{ // 램에서 노는 친구
     var trendFetchCompletion:(([any Media])->Void)?
     var getMediaList:[any Media]?{
         //        여기에서 날짜 확인하고 업데이트 해야한다.
-        self.trendMedias[Two(values: (timeType,mediaType))]
+        return self.trendMedias[Two(values: (timeType,mediaType))]
     }
     private init(){
-        if let timeType = UserDefaults.standard.timeType{
-            self.timeType = timeType
-        }else{
-            self.timeType = .day
-            UserDefaults.standard.timeType = .day
-        }
-        if let mediaType = UserDefaults.standard.mediaType{
-            self.mediaType = mediaType
-        }else{
-            self.mediaType = .all
-            UserDefaults.standard.mediaType = .all
-        }
+//MARK: -- Legacy 직접 UserDefaults와 통신함
+//        if let timeType = UserDefaults.standard.timeType{
+//            self.timeType = timeType
+//        }else{
+//            self.timeType = .day
+//            UserDefaults.standard.timeType = .day
+//        }
+//        if let mediaType = UserDefaults.standard.mediaType{
+//            self.mediaType = mediaType
+//        }else{
+//            self.mediaType = .all
+//            UserDefaults.standard.mediaType = .all
+//        }
         initTrends()
     }
     
@@ -61,7 +76,7 @@ extension Cache{
             }
         }
         self.trendMedias = [:]
-        //MARK: -- 처음에 API 불리는 곳
+        //MARK: -- 처음에 API 불리는 곳 - 각각의 forEach마다 큐를 분리하면 오류 발생...
         DispatchQueue.global().async {
             let group = DispatchGroup()
             T_Window.allCases.forEach { t in M_Type.allCases.forEach { m in

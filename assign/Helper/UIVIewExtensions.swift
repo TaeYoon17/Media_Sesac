@@ -4,8 +4,6 @@
 //
 //  Created by 김태윤 on 2023/08/12.
 //
-
-import Foundation
 import UIKit
 extension UIView{
     func getBlur(style: UIBlurEffect.Style,corderRadius: CGFloat = 8,backgroundColor: UIColor = .clear){

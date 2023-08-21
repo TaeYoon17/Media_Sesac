@@ -9,11 +9,13 @@ import Foundation
 import SwiftyJSON
 //MARK: -- 트렌드 미디어 리스트
 extension UserDefaults{
+///  UserDefaults에 Encoding, Decoding을 위한 임시 객체
+///  미디어 타입을 갖고 Data 타입으로 저장된 원래의 데이터를 갖고 있음
     struct MediaElement:Codable{
         let type: TMDB.MediaType
         let data:Data
     }
-    func getTrend(media: TMDB.MediaType,time: TMDB.Time_Window)-> [any Media]?{
+    func getTrend(media: TMDB.MediaType,time: TMDB.Time_Window) -> [any Media]?{
         let decoder = JSONDecoder()
         guard let rawData = self.data(forKey: "\(media.rawValue)\(time.rawValue)") else { return nil }
         switch media{
@@ -71,26 +73,27 @@ extension UserDefaults{
 }
 //MARK: --  현재 트렌드 미디어 타입
 extension UserDefaults{
-    var mediaType: TMDB.MediaType?{
+    var mediaType: TMDB.MediaType{
         get{
-            guard let str = self.string(forKey: "mediaType") else {return nil}
-            return TMDB.MediaType(rawValue: str)
+            guard let str = self.string(forKey: "mediaType") else {return .all}
+            return TMDB.MediaType(rawValue: str) ?? .all
         }
         set{
-            guard let newValue,let mediaType, newValue != mediaType else {return}
+            guard newValue != mediaType else {return}
             self.set(newValue.rawValue, forKey: "mediaType")
         }
     }
 }
+
 //MARK: -- 트렌드 시간 타입
 extension UserDefaults{
-    var timeType: TMDB.Time_Window?{
+    var timeType: TMDB.Time_Window{
         get{
-            guard let str = self.string(forKey: "timeType") else {return nil}
-            return TMDB.Time_Window(rawValue: str)
+            guard let str = self.string(forKey: "timeType") else {return .day}
+            return TMDB.Time_Window(rawValue: str) ?? .day
         }
         set{
-            guard let newValue,let timeType, newValue != timeType else {return}
+            guard newValue != timeType else {return}
             self.set(newValue.rawValue, forKey: "timeType")
         }
     }

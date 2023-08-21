@@ -8,10 +8,13 @@
 import Foundation
 extension Date{
     static var dayFormatString:String{get{ "yyyy년 M월 dd일" }}
-    var day:String{
+    private static let formatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = Self.dayFormatString
-        return formatter.string(from: self)
+        return formatter
+    }()
+    var day:String{
+        return Self.formatter.string(from: self)
     }
     var getWeek:String?{
         let calendar = Calendar.current

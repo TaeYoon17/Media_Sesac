@@ -24,14 +24,12 @@ extension TMDB{
             case let .Detail(media: media,id:id):
                 return "/\(media.rawValue)/\(id)?language=en-US"
             case let .Recommend(media: m, id: i, page: p):
-                //            https://api.themoviedb.org/3/tv/113962/recommendations?language=en-US&page=1';
                 return "/\(m.rawValue)/\(i)/recommendations?language=en-US&page=\(p)"
-                
             }
         }
         var method: HTTPMethod{
             switch self{
-            case .Credit,.Trend,.Detail,.Recommend:return .get
+            case .Credit,.Trend,.Detail,.Recommend: return .get
             }
         }
         var headers: HTTPHeaders{
@@ -110,14 +108,5 @@ extension TMDB.Router{
         var params: Parameters?{
             return nil
         }
-        //        func action(){
-        //            print(Self.baseURL + endPoint)
-        //            let afRequest = AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
-        //            afRequest
-        //                .responseJSON { res in
-        //                    let res = JSON(res.data)
-        //                    print(res)
-        //                }
-        //        }
     }
 }

@@ -27,7 +27,6 @@ enum TMDB{
     enum Time_Window:String,CaseIterable{
         case day,week
     }
-    
 }
 
 //MARK: -- 언어 관련 정책
