@@ -8,6 +8,8 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+/// TMDB 데이터 비즈니스 정책
+/// TMDB Data Business Policy
 enum TMDB{
     enum MediaType:String,Codable,CaseIterable{
         case movie,tv,all
@@ -16,20 +18,25 @@ enum TMDB{
         }
         var idx:Int{
             switch self{
-            case .all: return 2
             case .movie: return 0
             case .tv: return 1
+            case .all: return 2
             }
         }
     }
     enum Time_Window:String,CaseIterable{
         case day,week
     }
+    
+}
+
+//MARK: -- 언어 관련 정책
+extension TMDB{
     enum LanguageCode: String{
         case en,kr,ja
     }
 }
-//MARK: -- 성별 관련 데이터
+//MARK: -- 성별 관련 정책
 extension TMDB{
     enum Gender:Int{
         private static var koreanTable:[Gender:String] = [

@@ -63,6 +63,7 @@ extension Cache{
         self.trendMedias = [:]
         //MARK: -- 처음에 API 불리는 곳
         DispatchQueue.global().async {
+            let group = DispatchGroup()
             T_Window.allCases.forEach { t in M_Type.allCases.forEach { m in
                 let two = Two(values: (t, m))
                 switch t{
@@ -71,22 +72,31 @@ extension Cache{
                        let media = userDefaults.getTrend(media: m, time: t){
                         self.trendMedias[two] = media
                     }else{
-                        print("API_Router Called - day")
-                        saveTrends(two)
-                        userDefaults.lastDay = nowDay
+                        group.enter()
+                        DispatchQueue.global().async {
+                            print("API_Router Called - day")
+                            saveTrends(two)
+                            userDefaults.lastDay = nowDay
+                            group.leave()
+                        }
                     }
                 case .week:
                     if let lastWeek = userDefaults.lastWeek, let nowWeek, nowWeek == lastWeek
                         ,let media = userDefaults.getTrend(media: m, time: t){
                         self.trendMedias[two] = media
                     }else{
-                        print("API_Router Called - week")
-                        saveTrends(two)
-                        userDefaults.lastWeek = nowWeek
+                        group.enter()
+                        DispatchQueue.global().async {
+                            print("API_Router Called - week")
+                            saveTrends(two)
+                            userDefaults.lastWeek = nowWeek
+                            group.leave()
+                        }
                     }
                 }
             }
             }
+            group.wait()
         }
     }
     func updateTrends(){ }

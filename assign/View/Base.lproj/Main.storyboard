@@ -410,7 +410,7 @@
         <!--검색-->
         <scene sceneID="hsx-1V-U28">
             <objects>
-                <viewController id="YhW-Ez-Y1Z" customClass="MainFilterSheetVC" customModule="assign" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YhW-Ez-Y1Z" customClass="SearchVC" customModule="assign" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gLb-EV-q2s">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -16,6 +16,7 @@ class TrendItemCell: UITableViewCell {
     @IBOutlet weak var genreLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var posterImgView: UIImageView!
+    @IBOutlet weak var originalTitleLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var clipBtn: UIButton!
     @IBOutlet weak var peoplesLabel: UILabel!
@@ -29,6 +30,7 @@ class TrendItemCell: UITableViewCell {
                 genreLabel.text = "# \(media.mediaType.getGenre(id: genreId))"
             }
             titleLabel.text = media.called
+            originalTitleLabel.text = media.originalCalled
             dateLabel.text = media.publishDate
             let genreTexts = media.genreIDS.map{media.mediaType.getGenre(id: $0)}.joined(separator: ", ")
             peoplesLabel.text = "All Genres: \(genreTexts)"

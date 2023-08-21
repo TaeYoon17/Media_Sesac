@@ -24,7 +24,7 @@ extension TMDB{
             case let .Detail(media: media,id:id):
                 return "/\(media.rawValue)/\(id)?language=en-US"
             case let .Recommend(media: m, id: i, page: p):
-//            https://api.themoviedb.org/3/tv/113962/recommendations?language=en-US&page=1';
+                //            https://api.themoviedb.org/3/tv/113962/recommendations?language=en-US&page=1';
                 return "/\(m.rawValue)/\(i)/recommendations?language=en-US&page=\(p)"
                 
             }
@@ -52,15 +52,13 @@ extension TMDB{
                                ,failHandler: (() ->Void)? = nil){
             let afRequest = AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
             afRequest
-                .responseDecodable(of: T.self,queue: .global()){ response in
-                    queue.async {
-                        guard let value = response.value else {
-                            print(response.description)
-                            failHandler?()
-                            return
-                        }
-                        successCompletion(value)
+                .responseDecodable(of: T.self,queue: queue){ response in
+                    guard let value = response.value else {
+                        print(response.description)
+                        failHandler?()
+                        return
                     }
+                    successCompletion(value)
                 }
         }
         func jsonAction(){
@@ -112,14 +110,14 @@ extension TMDB.Router{
         var params: Parameters?{
             return nil
         }
-//        func action(){
-//            print(Self.baseURL + endPoint)
-//            let afRequest = AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
-//            afRequest
-//                .responseJSON { res in
-//                    let res = JSON(res.data)
-//                    print(res)
-//                }
-//        }
+        //        func action(){
+        //            print(Self.baseURL + endPoint)
+        //            let afRequest = AF.request(Self.baseURL + endPoint,method: method, parameters: params,headers: headers)
+        //            afRequest
+        //                .responseJSON { res in
+        //                    let res = JSON(res.data)
+        //                    print(res)
+        //                }
+        //        }
     }
 }

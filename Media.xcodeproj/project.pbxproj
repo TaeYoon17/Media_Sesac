@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		632E302C2A9337CD007D563D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E302B2A9337CD007D563D /* SearchVC.swift */; };
+		632E302E2A933EDA007D563D /* SearchVC+CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E302D2A933EDA007D563D /* SearchVC+CollectionView.swift */; };
+		632E30312A93412A007D563D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632E30302A93412A007D563D /* SearchModel.swift */; };
 		6343860E2A87B6E200184619 /* TrendItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6343860C2A87B6E200184619 /* TrendItemCell.swift */; };
 		6343860F2A87B6E200184619 /* TrendItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6343860D2A87B6E200184619 /* TrendItemCell.xib */; };
 		634386112A87C52200184619 /* UIVIewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634386102A87C52200184619 /* UIVIewExtensions.swift */; };
@@ -61,6 +64,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		632E302B2A9337CD007D563D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		632E302D2A933EDA007D563D /* SearchVC+CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchVC+CollectionView.swift"; sourceTree = "<group>"; };
+		632E30302A93412A007D563D /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		6343860C2A87B6E200184619 /* TrendItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendItemCell.swift; sourceTree = "<group>"; };
 		6343860D2A87B6E200184619 /* TrendItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrendItemCell.xib; sourceTree = "<group>"; };
 		634386102A87C52200184619 /* UIVIewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIVIewExtensions.swift; sourceTree = "<group>"; };
@@ -127,6 +133,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		632E302A2A9337C3007D563D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				632E302B2A9337CD007D563D /* SearchVC.swift */,
+				632E302D2A933EDA007D563D /* SearchVC+CollectionView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		632E302F2A9340FE007D563D /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				632E30302A93412A007D563D /* SearchModel.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		634D4F212A8CEA070085E4F2 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +298,7 @@
 		63FD5EDF2A861EB8009BC89F /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				632E302A2A9337C3007D563D /* Search */,
 				634D4F312A8CF4180085E4F2 /* ExVC.swift */,
 				63F2D7332A87D032006AF6D3 /* TempVC.swift */,
 				6354950F2A8B2F9500E9DDCE /* MediaInfo */,
@@ -286,6 +310,7 @@
 		63FD5EE02A861EC4009BC89F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				632E302F2A9340FE007D563D /* Search */,
 				63685D822A8E085F00AAAD1A /* Recommend */,
 				6354950A2A8B2D5500E9DDCE /* Persons */,
 				635495072A8B294800E9DDCE /* Credits */,
@@ -446,9 +471,11 @@
 				63FD5EF82A8629A3009BC89F /* TMDB.swift in Sources */,
 				634D4F302A8CF21B0085E4F2 /* CreatedPerson.swift in Sources */,
 				63685D842A8E086C00AAAD1A /* MovieResponse.swift in Sources */,
+				632E302C2A9337CD007D563D /* SearchVC.swift in Sources */,
 				634D4F202A8CE8A30085E4F2 /* Movie_Detail.swift in Sources */,
 				635495152A8B49B500E9DDCE /* MediaInfoVC+Navigation+Tabbar.swift in Sources */,
 				634D4F2E2A8CF1F10085E4F2 /* Episode.swift in Sources */,
+				632E30312A93412A007D563D /* SearchModel.swift in Sources */,
 				635EE7522A868D5A009E66F5 /* UserDefaultsHelper.swift in Sources */,
 				6354951C2A8B6AC400E9DDCE /* MediaInfoVC+TableView.swift in Sources */,
 				63FD5EE52A861F18009BC89F /* API_Key.swift in Sources */,
@@ -457,6 +484,7 @@
 				63A6935D2A861E5B00E8F376 /* SceneDelegate.swift in Sources */,
 				6354950C2A8B2D6800E9DDCE /* Person.swift in Sources */,
 				63685D8D2A8E198500AAAD1A /* RecommendItemCell.swift in Sources */,
+				632E302E2A933EDA007D563D /* SearchVC+CollectionView.swift in Sources */,
 				634D4F272A8CF1230085E4F2 /* Country.swift in Sources */,
 				635495112A8B2FEC00E9DDCE /* MediaInfoVC.swift in Sources */,
 				635495092A8B2A9000E9DDCE /* Credits.swift in Sources */,
