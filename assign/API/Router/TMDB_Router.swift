@@ -15,6 +15,7 @@ extension TMDB{
         case Credit(media:TMDB.MediaType,id:Int)
         case Detail(media:TMDB.MediaType,id:Int)
         case Recommend(media: TMDB.MediaType,id:Int,page:Int)
+        case Similar(media: TMDB.MediaType,id:Int,page:Int)
         var endPoint:String{
             switch self{
             case let .Credit(media,id):
@@ -25,24 +26,26 @@ extension TMDB{
                 return "/\(media.rawValue)/\(id)?language=en-US"
             case let .Recommend(media: m, id: i, page: p):
                 return "/\(m.rawValue)/\(i)/recommendations?language=en-US&page=\(p)"
+            case let .Similar(media: m, id: i, page: p):
+            return "/\(m.rawValue)/\(i)/similar?language=en-US&page=\(p)"
             }
         }
         var method: HTTPMethod{
             switch self{
-            case .Credit,.Trend,.Detail,.Recommend: return .get
+            case .Credit,.Trend,.Detail,.Recommend,.Similar: return .get
             }
         }
         var headers: HTTPHeaders{
             var headers = HTTPHeaders()
             switch self{
-            case .Credit,.Trend,.Detail,.Recommend:
+            case .Credit,.Trend,.Detail,.Recommend,.Similar:
                 headers["Authorization"] = "Bearer \(API_Key.TMDB_ACCESS_TOKEN)"
                 return headers
             }
         }
         var params: Parameters?{
             switch self{
-            case .Credit,.Trend,.Detail,.Recommend: return nil
+            case .Credit,.Trend,.Detail,.Recommend,.Similar: return nil
             }
         }
         

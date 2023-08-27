@@ -27,7 +27,7 @@ struct Movie:Media,Codable{
     var originalLanguage:String
     var overview:String
     var posterPath:String?
-    var mediaType:TMDB.MediaType
+    var mediaType:TMDB.MediaType?
     var genreIDS:[Int]
     var popularity:Double
     var voteAverage:Double

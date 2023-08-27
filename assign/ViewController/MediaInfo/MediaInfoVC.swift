@@ -11,25 +11,40 @@ class MediaInfoVC: UIViewController{
     enum PeopleType:Int,CaseIterable{ case cast,crew }
     enum SectionType:Int,CaseIterable{
         case recommend
+        case similar
         case cast
         case crew
     }
     //Model
     var media:(any Media)?{
         didSet{
-            guard let media else {return}
-            TMDB.Router.Recommend(media: media.mediaType, id: media.mediaID, page: 1).action { [weak self] (response:MediaResponse) in
+            guard let media,let type = media.mediaType else {return} // 외부에서 받은 정보를 받자마자 처리해야할 네트워킹 작업
+            TMDB.Router.Recommend(media: type, id: media.mediaID, page: 1).action { [weak self] (response:MediaResponse) in
                 self?.recommendMedia = response.results
+            }
+            TMDB.Router.Similar(media: type, id: media.mediaID, page: 1).action{ [weak self] (response:MediaResponse) in
+                self?.similarMedia = response.results
             }
         }
     }
     var cast :[Credit]?
     var crew :[Credit]?
-    var recommendMedia :[any Media]?{
+    private var recommendMedia :[any Media]?{
         didSet{
             guard let recommendMedia,let tableView else { return }
-            tableView.reloadSections(IndexSet(SectionType.recommend.rawValue..<SectionType.cast.rawValue), with: .automatic)
+            let targetIdx = SectionType.recommend.rawValue
+            tableView.reloadSections(IndexSet(targetIdx..<targetIdx + 1), with: .automatic)
         }
+    }
+    private var similarMedia:[any Media]?{
+        didSet{
+            guard let similarMedia,let tableView else { return }
+            let targetIdx = SectionType.recommend.rawValue
+            tableView.reloadSections(IndexSet(targetIdx..<targetIdx + 1), with: .automatic)
+        }
+    }
+    var SectionMedia:[SectionType:[any Media]?]{
+        [.similar:similarMedia,.recommend:recommendMedia]
     }
     //ViewController
     var loadCompletion:(()->Void)?
@@ -58,7 +73,7 @@ class MediaInfoVC: UIViewController{
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        self.navigationController?.isNavigationBarHidden = false
+        //        self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
 }

@@ -24,15 +24,15 @@ class TrendItemCell: UITableViewCell {
     static let identifier = String(describing: TrendItemCell.self)
     var media:(any Media)?{
         didSet{
-            guard let media else {return}
+            guard let media,let mediaType = media.mediaType else {return}
             if let oldValue, media.mediaID == oldValue.mediaID{ return }
-            if let genreId = media.genreIDS.first{
-                genreLabel.text = "# \(media.mediaType.getGenre(id: genreId))"
+            if let genreId = media.genreIDS.first, let mediaType = media.mediaType{
+                genreLabel.text = "# \(mediaType.getGenre(id: genreId))"
             }
             titleLabel.text = media.called
             originalTitleLabel.text = media.originalCalled
             dateLabel.text = media.publishDate
-            let genreTexts = media.genreIDS.map{media.mediaType.getGenre(id: $0)}.joined(separator: ", ")
+            let genreTexts = media.genreIDS.map{mediaType.getGenre(id: $0)}.joined(separator: ", ")
             peoplesLabel.text = "All Genres: \(genreTexts)"
             let text = String(format: "%.2f", media.voteAverage)
             let rating = NSAttributedString(string: text,attributes: [.font: UIFont.systemFont(ofSize: 14)])

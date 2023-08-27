@@ -21,19 +21,6 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         SectionType.allCases.count
     }
-    //    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    ////        guard let type = PeopleType(rawValue: section) else {return nil}
-    ////        switch type{
-    ////        case .cast: return "연기자"
-    ////        case .crew: return "제작진"
-    ////        }
-    //        guard let type = SectionType(rawValue: section) else {return nil}
-    //        switch type{
-    //        case .cast: return "연기자"
-    //        case .crew: return "제작진"
-    //        case .recommend: return "추천작"
-    //        }
-    //    }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UILabel()
         view.backgroundColor = .white
@@ -43,7 +30,8 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
         switch type{
         case .cast: text = "연기자"
         case .crew: text =  "제작진"
-        case .recommend: text = "추천작"
+        case .recommend: text = "추천 콘텐츠"
+        case .similar: text = "연관 콘텐츠"
         }
         view.text = "\t\(text)"
         view.font = .boldSystemFont(ofSize: 24)
@@ -58,9 +46,11 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CastInfoItemCell.identifier) as? CastInfoItemCell else {return .init()}
             cell.credit =  type == .cast ? self.cast?[indexPath.row] : self.crew?[indexPath.row]
             return cell
-        case .recommend:
+        case .recommend,.similar:
             guard let c = tableView.dequeueReusableCell(withIdentifier: CollectionViewWrapperCell.identifier) as? CollectionViewWrapperCell else {return .init()}
-            c.recommendList = self.recommendMedia
+            if let list = self.SectionMedia[type]{
+                c.mediaList = list
+            }
             return c
         }
         
@@ -70,14 +60,14 @@ extension MediaInfoVC: UITableViewDelegate,UITableViewDataSource{
         switch type{
         case .cast: return cast?.count ?? 0
         case .crew: return crew?.count ?? 0
-        case .recommend: return 1
+        case .recommend,.similar: return 1
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let type = SectionType(rawValue: indexPath.section) else {return 0}
         switch type{
         case .cast,.crew: return 84
-        case .recommend: return self.tableView.bounds.width / 2
+        case .recommend,.similar: return self.tableView.bounds.width / 2
         }
     }
 }

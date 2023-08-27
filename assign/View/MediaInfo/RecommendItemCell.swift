@@ -16,5 +16,4 @@ class RecommendItemCell: UICollectionViewCell {
         // Initialization code
         posterImgView.layer.cornerRadius = 8
     }
-
 }

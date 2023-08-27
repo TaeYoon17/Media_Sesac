@@ -113,8 +113,8 @@ extension TrendVC:UITableViewDelegate,UITableViewDataSource{
         return c
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let mediaItem = mediaList?[indexPath.row] else { return }
-        TMDB.Router.Credit(media: mediaItem.mediaType, id: mediaItem.mediaID)
+        guard let mediaItem = mediaList?[indexPath.row], let mediaType = mediaItem.mediaType else { return }
+        TMDB.Router.Credit(media: mediaType, id: mediaItem.mediaID)
             .action { (res:CreditResponse) in
                 guard let vc = self.storyboard?.instantiateViewController(withIdentifier: MediaInfoVC.identifier) as? MediaInfoVC else {return}
 //                vc.res.cast

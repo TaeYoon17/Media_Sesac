@@ -6,17 +6,30 @@
 //
 
 import UIKit
-
+import Combine
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    @DefaultsState(\.isNotFirst) var isNotFirst
     var window: UIWindow?
-
+    var cancellable: AnyCancellable?{ didSet{ oldValue?.cancel() } }
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
-        
+        guard let scene = (scene as? UIWindowScene) else { return }
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        window = UIWindow(windowScene: scene)
+        cancellable = _isNotFirst.publisher.removeDuplicates().sink {[weak self] val in
+            guard let self else {return}
+            if val{
+                let vc = storyboard.instantiateViewController(identifier: "MainVC") as? UITabBarController
+                self.window?.rootViewController = vc
+            }else{
+                let vc = storyboard.instantiateViewController(identifier: String(describing: OnboardingVC.self)) as? OnboardingVC
+                self.window?.rootViewController = vc
+            }
+            self.window?.makeKeyAndVisible()
+        }
+        isNotFirst = isNotFirst
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

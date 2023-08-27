@@ -12,7 +12,7 @@ protocol Media:Codable,Equatable{
     var mediaID:Int {get set}
     var overview:String {get set}
     var posterPath:String?{get set}
-    var mediaType:TMDB.MediaType {get set}
+    var mediaType:TMDB.MediaType? {get set}
     var genreIDS:[Int] {get set}
     var popularity:Double {get set}
     var voteAverage:Double {get set}

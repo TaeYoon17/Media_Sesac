@@ -20,6 +20,15 @@ struct MediaResponse:Codable{
             case .tv:
                 if let tv:TV = try? dec.decode(TV.self, from: da){ return tv }
             case .all:break
+            case .none:
+                if var tv:TV = try? dec.decode(TV.self, from: da){
+                    tv.mediaType = .tv
+                    return tv
+                }
+                else if var movie:Movie = try? dec.decode(Movie.self, from: da){
+                    movie.mediaType = .movie
+                    return movie
+                }
             }
             fatalError("여기 문제요")
         }
@@ -64,7 +73,7 @@ struct RawResult: Codable,Media {
     var originalTitle: String?
     var overview: String
     var posterPath: String?
-    var mediaType: TMDB.MediaType
+    var mediaType: TMDB.MediaType?
     var genreIDS: [Int]
     var popularity: Double
     var releaseDate: String?

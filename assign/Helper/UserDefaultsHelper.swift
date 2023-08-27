@@ -7,6 +7,21 @@
 
 import Foundation
 import SwiftyJSON
+//MARK: -- 값 변화를 옵저빙하는 객체를 만듦
+@propertyWrapper
+struct DefaultsState<Value>{
+    private var path: ReferenceWritableKeyPath<UserDefaults,Value>
+    var wrappedValue: Value{
+        get{ UserDefaults.standard[keyPath: path] }
+        set{ UserDefaults.standard[keyPath: path] = newValue }
+    }
+    init(_ location:ReferenceWritableKeyPath<UserDefaults,Value>){
+        self.path = location
+    }
+    var publisher:NSObject.KeyValueObservingPublisher<UserDefaults, Value>{
+        UserDefaults.standard.publisher(for: path)
+    }
+}
 //MARK: -- 트렌드 미디어 리스트
 extension UserDefaults{
 ///  UserDefaults에 Encoding, Decoding을 위한 임시 객체
@@ -47,8 +62,8 @@ extension UserDefaults{
         switch media{
         case .all:
             let mediaList:[MediaElement] = data.compactMap { media in
-                guard let encoded = try? JSONEncoder().encode(media) else {return nil}
-                return .init(type: media.mediaType, data: encoded)
+                guard let encoded = try? JSONEncoder().encode(media),let media = media.mediaType else {return nil}
+                return .init(type: media, data: encoded)
             }
             guard let encoded = try? JSONEncoder().encode(mediaList) else{
                 print(#function,"인코딩 실패")
@@ -122,5 +137,14 @@ extension UserDefaults{
         }
     }
 }
-
-
+// MARK: -- 첫 방문 선택
+extension UserDefaults{
+    @objc var isNotFirst:Bool{
+        get{
+            return self.bool(forKey: "isNotFirst")
+        }
+        set{
+            self.set(newValue, forKey: "isNotFirst")
+        }
+    }
+}

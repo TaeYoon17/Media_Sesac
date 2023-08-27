@@ -9,11 +9,11 @@ import UIKit
 import Kingfisher
 class CollectionViewWrapperCell: UITableViewCell {
     @IBOutlet weak var collectionView: UICollectionView!
-    var recommendList:[any Media]?{
+    var mediaList:[any Media]?{
         didSet{
-            guard let recommendList else { return }
-            print("recommendList 생성")
-            print(recommendList)
+            guard let mediaList else { return }
+            print("mediaList 생성")
+            print(mediaList)
             self.collectionView.reloadData()
         }
     }
@@ -52,11 +52,11 @@ extension CollectionViewWrapperCell: UICollectionViewDelegate,UICollectionViewDa
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        recommendList?.count ?? 0
+        mediaList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendItemCell.identifier, for: indexPath) as? RecommendItemCell, let list = recommendList else {return .init()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommendItemCell.identifier, for: indexPath) as? RecommendItemCell, let list = mediaList else {return .init()}
         let recommend = list[indexPath.row]
         guard let path = recommend.posterPath ?? recommend.backdropPath,
               let url = URL.getImageURL(imgType: .collection, path: path) else { return cell}

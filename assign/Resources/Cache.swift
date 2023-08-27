@@ -6,17 +6,8 @@
 //
 
 import Foundation
-@propertyWrapper // 값 변화를 옵저빙하는 객체를 만듦
-struct DefaultsState<Value>{
-    private var path: ReferenceWritableKeyPath<UserDefaults,Value>
-    var wrappedValue: Value{
-        get{ UserDefaults.standard[keyPath: path] }
-        set{ UserDefaults.standard[keyPath: path] = newValue }
-    }
-    init(_ location:ReferenceWritableKeyPath<UserDefaults,Value>){
-        self.path = location
-    }
-}
+
+//MARK: -- UserDefaults는 하나의 큐에서 돌리는 것이 안정적이다. + 성능이 빨라서 웬만하면 Main Queue으로 돌려도 된다
 class Cache{ // 램에서 노는 친구
     typealias T_Window = TMDB.Time_Window
     typealias M_Type = TMDB.MediaType
@@ -24,13 +15,13 @@ class Cache{ // 램에서 노는 친구
     //    var week = "2022년 8월 22일"
     @DefaultsState(\.mediaType) var mediaType
     @DefaultsState(\.timeType) var timeType
-// MARK: -- Legacy 직접 UserDefaults의 값을 접근해서 바꿈
-//    var timeType: TMDB.Time_Window{
-//        didSet{ UserDefaults.standard.timeType = timeType }
-//    }
-//    var mediaType: TMDB.MediaType{
-//        didSet{ UserDefaults.standard.mediaType = mediaType }
-//    }
+    // MARK: -- Legacy 직접 UserDefaults의 값을 접근해서 바꿈
+    //    var timeType: TMDB.Time_Window{
+    //        didSet{ UserDefaults.standard.timeType = timeType }
+    //    }
+    //    var mediaType: TMDB.MediaType{
+    //        didSet{ UserDefaults.standard.mediaType = mediaType }
+    //    }
     private var trendMedias:[Two<T_Window,M_Type>:[any Media]] = [:]{
         didSet{
             guard let trendFetchCompletion,
@@ -46,19 +37,19 @@ class Cache{ // 램에서 노는 친구
         return self.trendMedias[Two(values: (timeType,mediaType))]
     }
     private init(){
-//MARK: -- Legacy 직접 UserDefaults와 통신함
-//        if let timeType = UserDefaults.standard.timeType{
-//            self.timeType = timeType
-//        }else{
-//            self.timeType = .day
-//            UserDefaults.standard.timeType = .day
-//        }
-//        if let mediaType = UserDefaults.standard.mediaType{
-//            self.mediaType = mediaType
-//        }else{
-//            self.mediaType = .all
-//            UserDefaults.standard.mediaType = .all
-//        }
+        //MARK: -- Legacy 직접 UserDefaults와 통신함
+        //        if let timeType = UserDefaults.standard.timeType{
+        //            self.timeType = timeType
+        //        }else{
+        //            self.timeType = .day
+        //            UserDefaults.standard.timeType = .day
+        //        }
+        //        if let mediaType = UserDefaults.standard.mediaType{
+        //            self.mediaType = mediaType
+        //        }else{
+        //            self.mediaType = .all
+        //            UserDefaults.standard.mediaType = .all
+        //        }
         initTrends()
     }
     
@@ -77,42 +68,41 @@ extension Cache{
         }
         self.trendMedias = [:]
         //MARK: -- 처음에 API 불리는 곳 - 각각의 forEach마다 큐를 분리하면 오류 발생...
-        DispatchQueue.global().async {
-            let group = DispatchGroup()
-            T_Window.allCases.forEach { t in M_Type.allCases.forEach { m in
-                let two = Two(values: (t, m))
-                switch t{
-                case .day:
-                    if let lastDay = userDefaults.lastDay, lastDay == nowDay,
-                       let media = userDefaults.getTrend(media: m, time: t){
-                        self.trendMedias[two] = media
-                    }else{
-                        group.enter()
-                        DispatchQueue.global().async {
-                            print("API_Router Called - day")
-                            saveTrends(two)
-                            userDefaults.lastDay = nowDay
-                            group.leave()
-                        }
+        let group = DispatchGroup()
+        T_Window.allCases.forEach { t in M_Type.allCases.forEach { m in
+            let two = Two(values: (t, m))
+            switch t{
+            case .day:
+                if let lastDay = userDefaults.lastDay, lastDay == nowDay,
+                   let media = userDefaults.getTrend(media: m, time: t){
+                    self.trendMedias[two] = media
+                }else{
+                    group.enter()
+                    DispatchQueue.global().async {
+                        print("API_Router Called - day")
+                        saveTrends(two)
+                        userDefaults.lastDay = nowDay
+                        group.leave()
                     }
-                case .week:
-                    if let lastWeek = userDefaults.lastWeek, let nowWeek, nowWeek == lastWeek
-                        ,let media = userDefaults.getTrend(media: m, time: t){
-                        self.trendMedias[two] = media
-                    }else{
-                        group.enter()
-                        DispatchQueue.global().async {
-                            print("API_Router Called - week")
-                            saveTrends(two)
-                            userDefaults.lastWeek = nowWeek
-                            group.leave()
-                        }
+                }
+            case .week:
+                if let lastWeek = userDefaults.lastWeek, let nowWeek, nowWeek == lastWeek
+                    ,let media = userDefaults.getTrend(media: m, time: t){
+                    self.trendMedias[two] = media
+                }else{
+                    group.enter()
+                    DispatchQueue.global().async {
+                        print("API_Router Called - week")
+                        saveTrends(two)
+                        userDefaults.lastWeek = nowWeek
+                        group.leave()
                     }
                 }
             }
-            }
-            group.wait()
         }
+        }
+        group.wait()
+        
     }
     func updateTrends(){ }
 }
