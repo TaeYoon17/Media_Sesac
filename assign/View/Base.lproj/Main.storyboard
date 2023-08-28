@@ -468,7 +468,7 @@
         <!--지도입니당-->
         <scene sceneID="b0Q-Re-dBo">
             <objects>
-                <viewController id="JtV-Ed-raa" customClass="MapVC" customModule="assign" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JtV-Ed-raa" customClass="NearTheaterVC" customModule="assign" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oz7-eI-ryJ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
