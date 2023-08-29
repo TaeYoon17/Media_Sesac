@@ -13,7 +13,7 @@ enum LocationError:Error{
     case duplicateRequest
 }
 typealias Geo = (latitude: Double,longtitude: Double)
-class LocationService:NSObject{
+final class LocationService:NSObject{
     static let shared = LocationService()
     private let locationManager = CLLocationManager()
     private var authSuccess:(()->Void)?
@@ -60,8 +60,8 @@ extension LocationService{
         self.authFailed = failed
         checkDeviceLocationAuthorization()
     }
+    // iOS 위치 서비스 활성화 체크
     private func checkDeviceLocationAuthorization(){
-        // iOS 위치 서비스 활성화 체크
         DispatchQueue.global().async { [weak self] in
             guard let self else {return}
             if CLLocationManager.locationServicesEnabled(){
@@ -87,9 +87,7 @@ extension LocationService{
             print("restricted")
         case .denied: // 그냥 거부
             print("denied")
-            DispatchQueue.main.async {
-                self.authFailed?()
-            }
+            DispatchQueue.main.async { self.authFailed?() }
         case .authorizedAlways:
             print("authorizedAlways")
             isAvailableAccessLocation = true

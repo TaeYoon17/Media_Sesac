@@ -10,18 +10,24 @@ import SnapKit
 import Combine
 import MapKit
 class NearTheaterVC: UIViewController{
-    //    let mapView = MKMapView()
-    lazy var v = NearTheaterView(navigationController: self.navigationController!)
-    let locationService = LocationService.shared
-    let theaterModel = TheaterModel()
+    lazy var v = NearTheaterView()
+    private let locationService = LocationService.shared
+    private let theaterModel = TheaterModel()
     private var theaterAnnotations: [(TheaterItem,MKPointAnnotation)] = []
-    var subscription = Set<AnyCancellable>()
-    override func loadView() { self.view = v }
+    private var subscription = Set<AnyCancellable>()
+    override func loadView() {
+        self.navigationItem.title = "지도입니다~"
+        self.navigationItem.rightBarButtonItem = .init(title: "필터", style: .plain, target: self, action: #selector(Self.rightBtnTapped(_:)))
+        self.view = v
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         locationSubscription()
         viewSubscription()
         setMarker(companies: TheaterCompany.allCases)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -46,10 +52,10 @@ class NearTheaterVC: UIViewController{
     }
     func viewSubscription(){
         self.v.mapView.delegate = self
-        self.v.$isNavTabHidden
-            .debounce(for: .seconds(0.6), scheduler: DispatchQueue.main)
+        self.v.$isNavTabHidden.debounce(for: .seconds(0.6), scheduler: DispatchQueue.main)
             .sink {[weak self] val in
-                self?.v.setNaviTabHidden(val: val)
+                self?.navigationController?
+                    .setNavigationBarHidden(val, animated: true)
             }
             .store(in: &subscription)
     }
@@ -102,4 +108,11 @@ extension NearTheaterVC{
         alert.addAction(.init(title: "뒤로가기", style: .cancel))
         return alert
     }
+    @objc func rightBtnTapped(_ sender: UIBarButtonItem){
+        self.present(theaterSelector,animated: true)
+    }
 }
+/// 문제점: MVC 아키텍처를 준수하기 위한 문제점
+/// 1. View에 Published를 사용해도 괜찮나? View가 VC를 모르게 사용하기 위한 방법...
+/// 2. View가 제스처 관련 메서드를 알아도 되는가? -> 이 방법을 안 사용하고 처리하려면 결국 VC 자체를 delegate 해야할 것 같은데...
+/// 3. View가 navigationController를 알아도 괜찮나? -> 뷰 관련 동작인 setNavigationBarHidden(val, animated: true)을 VC가 처리해야함

@@ -465,7 +465,7 @@
             </objects>
             <point key="canvasLocation" x="702" y="58"/>
         </scene>
-        <!--지도입니당-->
+        <!--Near TheaterVC-->
         <scene sceneID="b0Q-Re-dBo">
             <objects>
                 <viewController id="JtV-Ed-raa" customClass="NearTheaterVC" customModule="assign" customModuleProvider="target" sceneMemberID="viewController">
@@ -475,7 +475,7 @@
                         <viewLayoutGuide key="safeArea" id="bsg-GS-hek"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="지도입니당" id="8ZU-uA-rgP"/>
+                    <navigationItem key="navigationItem" id="8ZU-uA-rgP"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w3I-ly-mt2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

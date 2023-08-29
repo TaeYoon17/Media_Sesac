@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 
+
 extension MKMapView{
     @MainActor func setCenterRegionAnnotation(geo:(Double,Double)){
         let center = CLLocationCoordinate2D(latitude: geo.0, longitude: geo.1)
@@ -15,3 +16,4 @@ extension MKMapView{
         self.setRegion(region, animated: true)
     }
 }
+

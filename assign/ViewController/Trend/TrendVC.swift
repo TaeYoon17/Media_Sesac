@@ -61,6 +61,11 @@ class TrendVC: UIViewController{
         super.viewWillAppear(animated)
         print(#function)
         self.navigationItem.title = navTitle
+        self.navigationController?.insertAccount()
+        self.scrollViewDidScroll(self.tableView)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.deleteAccount()
     }
     var prevY: CGFloat = 0.0
     let lineY:CGFloat = -143
@@ -86,6 +91,7 @@ class TrendVC: UIViewController{
 
 extension TrendVC:UITableViewDelegate,UITableViewDataSource{
     func configureTableView(){
+        tableView.showsVerticalScrollIndicator = false
         tableView.tableFooterView = {
             let uiview = UIView(frame: .init(x: 0, y: 0, width: view.bounds.width, height: 64))
             uiview.backgroundColor = .white
@@ -140,7 +146,8 @@ extension TrendVC:UITableViewDelegate,UITableViewDataSource{
                 self.headerView.isHidden = true
             }
         }
-        
+        self.navigationController?.scrollAccountView(nowY: nowY)
+        print(nowY)
         let maxHeight = scrollView.contentSize.height - 100
 //        print(maxHeight,nowY + self.bottomView.frame.origin.y)
         UIView.animate(withDuration: 0.2) { [weak self] in

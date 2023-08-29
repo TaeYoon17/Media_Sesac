@@ -12,15 +12,8 @@ import Combine
 final class NearTheaterView: BaseView{
     let mapView = MKMapView()
     @Published var isNavTabHidden = false
-    weak var navigationController: UINavigationController?{
-        didSet{
-            guard let navigationController else {return}
-            navigationController.navigationItem.rightBarButtonItem = .init(title: "Filter", style: .plain, target: self, action: #selector(Self.filterTapped(_:)))
-        }
-    }
-    convenience init(navigationController:UINavigationController) {
+    convenience init() {
         self.init(frame: .zero)
-        self.navigationController = navigationController
         mapView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.mapTapped)))
         mapView.showsUserLocation = true
     }
@@ -33,20 +26,19 @@ final class NearTheaterView: BaseView{
         self.addSubview(mapView)
     }
     override func setConstraints() {
-        mapView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        mapView.snp.makeConstraints {
+            $0.edges.top.horizontalEdges.equalToSuperview()
+            $0.edges.bottom.equalTo(self.layoutMargins)
+        }
     }
     @MainActor func updateAnootation(remove:[MKAnnotation],append:[MKAnnotation]){
         self.mapView.removeAnnotations(remove)
         self.mapView.addAnnotations(append)
     }
-    //MARK: -- 여기 파란 점으로 수정
+    //MARK: -- 여기 파란 점 수정
     @MainActor func setCenterRegionAnnotation(geo:(Double,Double)){
         let center = CLLocationCoordinate2D(latitude: geo.0, longitude: geo.1)
         let region = MKCoordinateRegion(center: center, latitudinalMeters: 400, longitudinalMeters: 400)
         mapView.setRegion(region, animated: true)
-    }
-    @MainActor func setNaviTabHidden(val: Bool){
-        print(#function)
-        navigationController?.setNavigationBarHidden(val, animated: true)
     }
 }
