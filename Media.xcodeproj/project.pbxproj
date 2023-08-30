@@ -65,6 +65,8 @@
 		63F242B42A9DDAA800E2484F /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242B32A9DDAA800E2484F /* AccountVC.swift */; };
 		63F242B62A9DDE2000E2484F /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242B52A9DDE2000E2484F /* AppManager.swift */; };
 		63F242B82A9DEB5100E2484F /* NavigationControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242B72A9DEB5100E2484F /* NavigationControllerExtensions.swift */; };
+		63F242BB2A9DF39400E2484F /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242BA2A9DF39400E2484F /* AccountView.swift */; };
+		63F242BD2A9DF3F500E2484F /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242BC2A9DF3F500E2484F /* BaseVC.swift */; };
 		63F2D7342A87D032006AF6D3 /* TempVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F2D7332A87D032006AF6D3 /* TempVC.swift */; };
 		63FD5EE22A861ED1009BC89F /* TrendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EE12A861ED1009BC89F /* TrendVC.swift */; };
 		63FD5EE52A861F18009BC89F /* API_Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FD5EE42A861F18009BC89F /* API_Key.swift */; };
@@ -137,6 +139,8 @@
 		63F242B32A9DDAA800E2484F /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
 		63F242B52A9DDE2000E2484F /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		63F242B72A9DEB5100E2484F /* NavigationControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerExtensions.swift; sourceTree = "<group>"; };
+		63F242BA2A9DF39400E2484F /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		63F242BC2A9DF3F500E2484F /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		63F2D7332A87D032006AF6D3 /* TempVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempVC.swift; sourceTree = "<group>"; };
 		63FD5EE12A861ED1009BC89F /* TrendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendVC.swift; sourceTree = "<group>"; };
 		63FD5EE42A861F18009BC89F /* API_Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API_Key.swift; sourceTree = "<group>"; };
@@ -343,6 +347,7 @@
 			isa = PBXGroup;
 			children = (
 				6385D17E2A9C4ECB00EEA0D3 /* BaseView.swift */,
+				63F242BC2A9DF3F500E2484F /* BaseVC.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -390,6 +395,14 @@
 			path = Account;
 			sourceTree = "<group>";
 		};
+		63F242B92A9DF38700E2484F /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				63F242BA2A9DF39400E2484F /* AccountView.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
 		63F2D7322A87D01E006AF6D3 /* Trend */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +416,7 @@
 		63FD5EDE2A861EB3009BC89F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				63F242B92A9DF38700E2484F /* Account */,
 				6385D17A2A9C4DB500EEA0D3 /* MapView */,
 				635495162A8B5AC500E9DDCE /* MediaInfo */,
 				635495122A8B300800E9DDCE /* Trend */,
@@ -567,9 +581,11 @@
 				63419CD32A9C255F007C9616 /* MapViewExtensions.swift in Sources */,
 				634D4F292A8CF1580085E4F2 /* SpokenLanguage.swift in Sources */,
 				63A6935B2A861E5B00E8F376 /* AppDelegate.swift in Sources */,
+				63F242BD2A9DF3F500E2484F /* BaseVC.swift in Sources */,
 				635495192A8B5ADB00E9DDCE /* CastInfoItemCell.swift in Sources */,
 				6354950E2A8B2F4500E9DDCE /* CreditResponse.swift in Sources */,
 				635EE7562A876B40009E66F5 /* TV.swift in Sources */,
+				63F242BB2A9DF39400E2484F /* AccountView.swift in Sources */,
 				6354951E2A8BA5E400E9DDCE /* URLExtensions.swift in Sources */,
 				63F242B62A9DDE2000E2484F /* AppManager.swift in Sources */,
 				630613602A9B2B0A00BEB6BE /* NearTheaterVC+MapViewDelegate.swift in Sources */,

@@ -73,7 +73,6 @@ extension UINavigationController{
     }
     @objc func goToAccount(){
         let vc = AccountVC()
-        vc.navigationItem.title = "계정"
         let nav = UINavigationController(rootViewController: vc)
         self.present(nav,animated: true)
     }
