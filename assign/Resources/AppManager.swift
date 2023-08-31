@@ -10,6 +10,17 @@ import Combine
 import UIKit
 final class AppManager: NSObject{
     var accountLogoView: UIImageView?
+//    @DefaultsState(\.)
+    @DefaultsState(\.profileImage) var accountImage {
+        didSet{
+            accountLogoView?.image = accountImage
+        }
+    }
+//    var accountImage: UIImage? = UIImage(named: "SwiftUI"){
+//        didSet{
+//            accountLogoView?.image = accountImage
+//        }
+//    }
     static let shared = AppManager()
     private override init(){
         super.init()

@@ -51,7 +51,7 @@ extension AccountView{
             var config = UIButton.Configuration.plain()
             // uiimage 자체에 색상 설정하기
             let image = UIImage(systemName: "person.circle")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-            config.background.image = image
+            config.background.image = AppManager.shared.accountImage ?? image
             config.background.image?.withTintColor(.darkGray)
             config.background.backgroundColor = .systemGray5
             config.background.imageContentMode = .scaleAspectFill
@@ -70,7 +70,7 @@ extension AccountView{
             btn.configuration = config
             return btn
         }()
-        private let info = {
+        let info = {
             let v = UIButton()
             var config = UIButton.Configuration.gray()
             config.baseBackgroundColor = .clear
@@ -93,7 +93,6 @@ extension AccountView{
             super.init(frame: .zero)
             viewConfiguration()
             setConstraints()
-//            backgroundColor = .cyan
         }
         required init?(coder: NSCoder) {
             fatalError("this cell is error")
@@ -125,7 +124,6 @@ extension AccountView{
             DispatchQueue.main.async {
                 self.profileImageView.configuration?.background.cornerRadius = self.profileImageView.frame.width / 2
                 self.avaterImageView.configuration?.background.cornerRadius = self.avaterImageView.frame.width / 2
-//                self.profileImageView.setNeedsLayout()
             }
         }
     }

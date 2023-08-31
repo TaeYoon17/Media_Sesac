@@ -33,7 +33,7 @@ extension UINavigationController{
         }
         AppManager.shared.accountLogoView?.removeFromSuperview()
         // 유저 계정 이미지가 있으면 그것을 가져오도록 코드를 수정해야함
-        let imageView = UIImageView(image: UIImage(systemName: "person.circle"))
+        let imageView = UIImageView(image: AppManager.shared.accountImage ?? UIImage(systemName: "person.circle") )
         AppManager.shared.accountLogoView = imageView
         navigationBar.addSubview(imageView)
         // setup constraints

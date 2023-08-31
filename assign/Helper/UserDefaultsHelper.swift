@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftyJSON
+import UIKit
 //MARK: -- 값 변화를 옵저빙하는 객체를 만듦
 @propertyWrapper
 struct DefaultsState<Value>{
@@ -116,9 +117,7 @@ extension UserDefaults{
 //MARK: -- 마지막에 저장한 날짜
 extension UserDefaults{
     var lastDay:String?{
-        get{
-            return self.string(forKey: "day")
-        }
+        get{ string(forKey: "day") }
         set{
             guard let newValue else { return }
             self.set(newValue, forKey: "day")
@@ -128,9 +127,7 @@ extension UserDefaults{
 //MARK: -- 저장된 주
 extension UserDefaults{
     var lastWeek:String?{
-        get{
-            return self.string(forKey: "week")
-        }
+        get{ string(forKey: "week") }
         set{
             guard let newValue else {return}
             self.set(newValue, forKey: "week")
@@ -140,11 +137,23 @@ extension UserDefaults{
 // MARK: -- 첫 방문 선택
 extension UserDefaults{
     @objc var isNotFirst:Bool{
-        get{
-            return self.bool(forKey: "isNotFirst")
-        }
+        get{ bool(forKey: "isNotFirst") }
         set{
             self.set(newValue, forKey: "isNotFirst")
+        }
+    }
+}
+//MARK: --  계정 이미지 defaults
+extension UserDefaults{
+    var profileImage: UIImage?{
+        get{
+            guard let data = self.data(forKey: "profileImage") else {return UIImage(systemName: "person.circle")}
+            return UIImage(data: data) ?? UIImage(systemName: "person.circle")
+        }
+        set{
+            guard let newValue else {return}
+            let data = newValue.jpegData(compressionQuality: 0.6)
+            self.set(data,forKey: "profileImage")
         }
     }
 }
