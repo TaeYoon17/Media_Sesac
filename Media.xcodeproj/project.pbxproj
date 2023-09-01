@@ -64,6 +64,9 @@
 		63A693672A861E5C00E8F376 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63A693652A861E5C00E8F376 /* LaunchScreen.storyboard */; };
 		63B67CFA2AA22A6700F3965F /* AccountVC+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B67CF92AA22A6700F3965F /* AccountVC+Navigation.swift */; };
 		63B67CFC2AA23A6E00F3965F /* AccountVC+ImageDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B67CFB2AA23A6E00F3965F /* AccountVC+ImageDelegate.swift */; };
+		63B67CFE2AA23CED00F3965F /* AccountSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B67CFD2AA23CED00F3965F /* AccountSettingVC.swift */; };
+		63B67D012AA23DAF00F3965F /* AccountSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B67D002AA23DAF00F3965F /* AccountSettingView.swift */; };
+		63B67D032AA2460100F3965F /* AccountInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B67D022AA2460100F3965F /* AccountInputCell.swift */; };
 		63F242B12A9DD7CA00E2484F /* TrendVC+NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242B02A9DD7CA00E2484F /* TrendVC+NavigationBar.swift */; };
 		63F242B42A9DDAA800E2484F /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242B32A9DDAA800E2484F /* AccountVC.swift */; };
 		63F242B62A9DDE2000E2484F /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F242B52A9DDE2000E2484F /* AppManager.swift */; };
@@ -141,6 +144,9 @@
 		63A693682A861E5C00E8F376 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63B67CF92AA22A6700F3965F /* AccountVC+Navigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountVC+Navigation.swift"; sourceTree = "<group>"; };
 		63B67CFB2AA23A6E00F3965F /* AccountVC+ImageDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountVC+ImageDelegate.swift"; sourceTree = "<group>"; };
+		63B67CFD2AA23CED00F3965F /* AccountSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingVC.swift; sourceTree = "<group>"; };
+		63B67D002AA23DAF00F3965F /* AccountSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingView.swift; sourceTree = "<group>"; };
+		63B67D022AA2460100F3965F /* AccountInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInputCell.swift; sourceTree = "<group>"; };
 		63F242B02A9DD7CA00E2484F /* TrendVC+NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrendVC+NavigationBar.swift"; sourceTree = "<group>"; };
 		63F242B32A9DDAA800E2484F /* AccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
 		63F242B52A9DDE2000E2484F /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
@@ -295,8 +301,9 @@
 				635495142A8B49B500E9DDCE /* MediaInfoVC+Navigation+Tabbar.swift */,
 				6354951B2A8B6AC400E9DDCE /* MediaInfoVC+TableView.swift */,
 			);
-			path = MediaInfo;
-			sourceTree = "<group>";
+			name = MediaInfo;
+			path = assign/ViewController/MediaInfo;
+			sourceTree = SOURCE_ROOT;
 		};
 		635495122A8B300800E9DDCE /* Trend */ = {
 			isa = PBXGroup;
@@ -393,9 +400,18 @@
 			path = assign;
 			sourceTree = "<group>";
 		};
+		63B67CFF2AA23D2300F3965F /* SettingVC */ = {
+			isa = PBXGroup;
+			children = (
+				63B67CFD2AA23CED00F3965F /* AccountSettingVC.swift */,
+			);
+			path = SettingVC;
+			sourceTree = "<group>";
+		};
 		63F242B22A9DDA9D00E2484F /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				63B67CFF2AA23D2300F3965F /* SettingVC */,
 				63F242B32A9DDAA800E2484F /* AccountVC.swift */,
 				633507C02AA07C3700F2E6AB /* AccountVC+ViewModel.swift */,
 				63B67CF92AA22A6700F3965F /* AccountVC+Navigation.swift */,
@@ -408,6 +424,8 @@
 			isa = PBXGroup;
 			children = (
 				63F242BA2A9DF39400E2484F /* AccountView.swift */,
+				63B67D002AA23DAF00F3965F /* AccountSettingView.swift */,
+				63B67D022AA2460100F3965F /* AccountInputCell.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -437,13 +455,13 @@
 		63FD5EDF2A861EB8009BC89F /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				6354950F2A8B2F9500E9DDCE /* MediaInfo */,
 				63F242B22A9DDA9D00E2484F /* Account */,
 				630613582A9B22F700BEB6BE /* MapVC */,
 				630613552A9B0EED00BEB6BE /* Onboarding */,
 				632E302A2A9337C3007D563D /* Search */,
 				634D4F312A8CF4180085E4F2 /* ExVC.swift */,
 				63F2D7332A87D032006AF6D3 /* TempVC.swift */,
-				6354950F2A8B2F9500E9DDCE /* MediaInfo */,
 				63F2D7322A87D01E006AF6D3 /* Trend */,
 			);
 			path = ViewController;
@@ -604,12 +622,15 @@
 				6355C6482A89C2F500579712 /* Cache.swift in Sources */,
 				63F242B42A9DDAA800E2484F /* AccountVC.swift in Sources */,
 				630613662A9B2DFA00BEB6BE /* MapResource.swift in Sources */,
+				63B67CFE2AA23CED00F3965F /* AccountSettingVC.swift in Sources */,
 				630613642A9B2DD400BEB6BE /* Theater.swift in Sources */,
 				63685D892A8E13F700AAAD1A /* CollectionViewWrapperCell.swift in Sources */,
+				63B67D012AA23DAF00F3965F /* AccountSettingView.swift in Sources */,
 				6355C64A2A89DA0400579712 /* DateExtensions.swift in Sources */,
 				63FD5EF52A862529009BC89F /* RouterProtocol.swift in Sources */,
 				634D4F1E2A8CE7FD0085E4F2 /* TV_Detail.swift in Sources */,
 				6385D17C2A9C4DC000EEA0D3 /* NearTheaterView.swift in Sources */,
+				63B67D032AA2460100F3965F /* AccountInputCell.swift in Sources */,
 				63FD5EFA2A863730009BC89F /* Movie.swift in Sources */,
 				63FD5EE22A861ED1009BC89F /* TrendVC.swift in Sources */,
 				634386112A87C52200184619 /* UIVIewExtensions.swift in Sources */,

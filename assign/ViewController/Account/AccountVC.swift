@@ -44,7 +44,10 @@ class AccountVC:BaseVC{
         initNavigation()
         self.view = mainView
     }
-    override func viewDidLoad() { super.viewDidLoad() }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        mainView.collectionView.delegate = self
+    }
     deinit{ print("accountVC deinit!!") }
     override func configureView() {
         super.configureView()
@@ -67,11 +70,13 @@ extension AccountVC{
             var defaultConfig = cell.defaultContentConfiguration()
             defaultConfig.text = itemIdentifier.label
             defaultConfig.prefersSideBySideTextAndSecondaryText = true
+            var backConfig = UIBackgroundConfiguration.listPlainCell()
+            cell.backgroundConfiguration = backConfig
             cell.contentConfiguration = defaultConfig
             cell.accessories = [.label(text: itemIdentifier.placeholder ?? ""),.disclosureIndicator()]
         }
         let headerRegistration = UICollectionView.CellRegistration<AccountView.HeaderCell,Item> {[weak self] cell, indexPath, itemIdentifier in
-            guard let self else {return}
+//            guard let self else {return}
             cell.dequeueCompletion()
         }
         
@@ -103,9 +108,8 @@ extension AccountVC{
                 return c.dequeueConfiguredReusableCell(using: mainRegistration, for: indexPath, item: item)
             }
         }
-        self.diffableDataSource?.supplementaryViewProvider = { [weak self] collectionView,elementKind,indexPath -> UICollectionReusableView? in
-            guard let self else {fatalError("weak self error \(#function)")}
-            return collectionView.dequeueConfiguredReusableSupplementary(using: sectionHeaderRegistration, for: indexPath)
+        self.diffableDataSource?.supplementaryViewProvider = { collectionView,elementKind,indexPath -> UICollectionReusableView? in
+            collectionView.dequeueConfiguredReusableSupplementary(using: sectionHeaderRegistration, for: indexPath)
         }
         self.diffableDataSource?.apply({
             var snapshot = NSDiffableDataSourceSnapshot<Section,Item>()
@@ -116,4 +120,11 @@ extension AccountVC{
         }())
     }
 }
-
+extension AccountVC: UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = SettingVC()
+        // 터치 후 Select 색상 남기지 않기
+        collectionView.deselectItem(at: indexPath, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+}
