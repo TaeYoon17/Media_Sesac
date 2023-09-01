@@ -32,43 +32,36 @@ class AccountVC:BaseVC{
         picker.delegate = self
         return picker
     }()
+    let infoAlert:UIAlertController = {
+        let alert = UIAlertController(title: "어떤 것을 가져올래?", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(.init(title: "프로필 사진", style: .default))
+        alert.addAction(.init(title: "아바타", style: .default))
+        alert.addAction(.init(title: "취소", style: .cancel))
+        return alert
+    }()
     var subscription = Set<AnyCancellable>()
     override func loadView() {
         initNavigation()
         self.view = mainView
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    deinit{
-        print("accountVC deinit!!")
-    }
+    override func viewDidLoad() { super.viewDidLoad() }
+    deinit{ print("accountVC deinit!!") }
     override func configureView() {
         super.configureView()
+        configureDataSource()
+    }
+    override func setConstraints() {
+        super.setConstraints()
+    }
+    
+}
+extension AccountVC{
+    func configureDataSource(){
         let sectionHeaderRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewListCell>(elementKind: UICollectionView.elementKindSectionHeader) {[weak self] headerView, elementKind, indexPath in
             let headerItem = self?.diffableDataSource?.snapshot().sectionIdentifiers[indexPath.section]
             var config = headerView.defaultContentConfiguration()
             config.text = headerItem?.description
-            if headerItem != Section.header{
-                headerView.contentConfiguration = config
-            }
-        }
-        let headerRegistration = UICollectionView.CellRegistration<AccountView.HeaderCell,Item> {[weak self] cell, indexPath, itemIdentifier in
-            guard let self else {return}
-            self.$profileImage.sink { image in
-                cell.profileImageView.configuration?.background.image = image
-            }.store(in: &self.subscription)
-            cell.profileImageView.addAction(.init(handler: {[weak self] _ in
-                self?.present(self!.photoPicker,animated: true)
-            }), for: .touchUpInside)
-            cell.info.addAction(.init(handler: {[weak self] _ in
-                let alert = UIAlertController(title: "어떤 것을 가져올래?", message: nil, preferredStyle: .actionSheet)
-                alert.addAction(.init(title: "프로필 사진", style: .default))
-                alert.addAction(.init(title: "아바타", style: .default))
-                alert.addAction(.init(title: "취소", style: .cancel))
-                self?.present(alert,animated: true)
-            }), for: .touchUpInside)
-            cell.dequeueCompletion()
+            if headerItem != Section.header{ headerView.contentConfiguration = config }
         }
         let mainRegistration = UICollectionView.CellRegistration<UICollectionViewListCell,Item> {cell, indexPath, itemIdentifier in
             var defaultConfig = cell.defaultContentConfiguration()
@@ -77,6 +70,11 @@ class AccountVC:BaseVC{
             cell.contentConfiguration = defaultConfig
             cell.accessories = [.label(text: itemIdentifier.placeholder ?? ""),.disclosureIndicator()]
         }
+        let headerRegistration = UICollectionView.CellRegistration<AccountView.HeaderCell,Item> {[weak self] cell, indexPath, itemIdentifier in
+            guard let self else {return}
+            cell.dequeueCompletion()
+        }
+        
         let footerRegistration = UICollectionView.CellRegistration<UICollectionViewListCell,Item> {cell, indexPath, itemIdentifier in
             var defaultConfig = cell.defaultContentConfiguration()
             defaultConfig.attributedText = NSAttributedString(string: itemIdentifier.label,attributes: [
@@ -85,79 +83,37 @@ class AccountVC:BaseVC{
             ])
             cell.contentConfiguration = defaultConfig
         }
-        self.diffableDataSource = UICollectionViewDiffableDataSource<Section,Item>(collectionView: mainView.collectionView){collectionView, indexPath, itemIdentifier in
+        self.diffableDataSource = UICollectionViewDiffableDataSource<Section,Item>(collectionView: mainView.collectionView){[weak self] c, indexPath, item in
+            guard let self else {fatalError("weak self error \(#function)")}
             guard let section:AccountVC.Section = AccountVC.Section(rawValue: indexPath.section) else { fatalError("없는 섹션") }
+            // 여기 반복을 어떻게 줄일까...
             switch section{
             case .footer:
-                return collectionView.dequeueConfiguredReusableCell(using: footerRegistration, for: indexPath, item: itemIdentifier)
+                return c.dequeueConfiguredReusableCell(using: footerRegistration, for: indexPath, item: item)
             case .header:
-                return collectionView.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: itemIdentifier)
+                let cell = c.dequeueConfiguredReusableCell(using: headerRegistration, for: indexPath, item: item)
+                self.$profileImage.sink { image in cell.profileImageView.configuration?.background.image = image }
+                    .store(in: &self.subscription)
+                cell.profileImageView.addAction(.init(handler: {[weak self] _ in self?.present(self!.photoPicker,animated: true) }),
+                                                for: .touchUpInside)
+                cell.info.addAction(.init(handler: {[weak self] _ in
+                    self?.present(self!.infoAlert,animated: true) }), for: .touchUpInside)
+                return cell
             case .main:
-                return collectionView.dequeueConfiguredReusableCell(using: mainRegistration, for: indexPath, item: itemIdentifier)
+                return c.dequeueConfiguredReusableCell(using: mainRegistration, for: indexPath, item: item)
             }
         }
-        self.diffableDataSource?.supplementaryViewProvider = {collectionView,elementKind,indexPath -> UICollectionReusableView? in
-            collectionView.dequeueConfiguredReusableSupplementary(using: sectionHeaderRegistration, for: indexPath)
+        self.diffableDataSource?.supplementaryViewProvider = { [weak self] collectionView,elementKind,indexPath -> UICollectionReusableView? in
+            guard let self else {fatalError("weak self error \(#function)")}
+            return collectionView.dequeueConfiguredReusableSupplementary(using: sectionHeaderRegistration, for: indexPath)
         }
-        self.diffableDataSource?.apply(initSnapshot)
-    }
-    override func setConstraints() {
-        super.setConstraints()
-    }
-    var initSnapshot:NSDiffableDataSourceSnapshot<Section,Item>{
-        var snapshot = NSDiffableDataSourceSnapshot<Section,Item>()
-        snapshot.appendSections(Section.allCases)
-        snapshot.appendItems([headerInfo],toSection: .header)
-        snapshot.appendItems(mainInfo,toSection: .main)
-        snapshot.appendItems(footerInfo,toSection:.footer)
-        return snapshot
-    }
-}
-fileprivate extension AccountVC{
-    func initNavigation(){
-        self.navigationItem.title = "계정"
-        self.navigationItem.rightBarButtonItem = .init(title: "완료", style: .done, target: self, action: #selector(Self.rightBtnTapped(_:)))
-        self.navigationItem.leftBarButtonItem = .init(barButtonSystemItem: .cancel, target: self, action: #selector(Self.leftBtnTapped(_:)))
-    }
-    @objc func rightBtnTapped(_ sender:UIBarButtonItem){
-        print(#function)
-        AppManager.shared.accountImage = profileImage
-        self.dismiss(animated: true)
-    }
-    @objc func leftBtnTapped(_ sender: UIBarButtonItem){
-        self.dismiss(animated: true)
+        self.diffableDataSource?.apply({
+            var snapshot = NSDiffableDataSourceSnapshot<Section,Item>()
+            snapshot.appendSections(Section.allCases)
+            zip(Section.allCases, [[headerInfo],mainInfo,footerInfo])
+                .forEach { snapshot.appendItems($1,toSection: $0) }
+            return snapshot
+        }())
     }
 }
 
-
-extension AccountVC: PHPickerViewControllerDelegate{
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true)
-        if let result = results.first{
-            result.itemProvider.loadObject(ofClass: UIImage.self) { reading, error in
-                guard let image = reading as? UIImage, error == nil else { return }
-                DispatchQueue.main.async {
-                    self.profileImage = image
-                    // TODO: - Here you get UIImage
-                }
-            }
-        }
-    }
-}
-extension AccountVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print(#function)
-        picker.dismiss(animated: true)
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print(#function)
-//        info[UIImagePickerController.InfoKey.originalImage]
-        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage{
-            DispatchQueue.main.async {[weak self] in
-                self?.profileImage = image
-                // TODO: - Here you get UIImage
-            }
-            dismiss(animated: true)
-        }
-    }
-}
