@@ -17,10 +17,14 @@ extension AccountVC{
             }
         }
     }
-    struct Item:Hashable{
+    struct Item:Hashable,Identifiable{
+        internal var id:String{ keyInfo }
         let keyInfo: String
         var label: String
         var placeholder: String?
         var input:String?
+    }
+    enum AccountType:String{
+        case name,username,sexNoun,introduce,link,sex
     }
 }

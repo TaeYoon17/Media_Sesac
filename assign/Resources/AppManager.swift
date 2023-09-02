@@ -16,6 +16,7 @@ final class AppManager: NSObject{
             accountLogoView?.image = accountImage
         }
     }
+    var userName: String?
 //    var accountImage: UIImage? = UIImage(named: "SwiftUI"){
 //        didSet{
 //            accountLogoView?.image = accountImage

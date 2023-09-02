@@ -13,10 +13,14 @@ import Combine
 class AccountVC:BaseVC{
     let mainView = AccountView()
     @Published var profileImage = AppManager.shared.accountImage
-    var diffableDataSource: UICollectionViewDiffableDataSource<Section,Item>?
+    var diffableDataSource: UICollectionViewDiffableDataSource<Section,Item>?{
+        didSet{
+            print(diffableDataSource == nil)
+        }
+    }
     let footerInfo = [Item(keyInfo: "premiumIntroduce", label: "프로페셔널 계정으로 전환")
                       ,Item(keyInfo: "privacySettiing", label: "개인정보 설정")]
-    let mainInfo = [
+    var mainInfo = [
         Item(keyInfo: "name", label: "이름"),
         Item(keyInfo: "username", label: "사용자 이름"),
         Item(keyInfo: "sexNoun", label: "성별 대명사"),
@@ -47,6 +51,7 @@ class AccountVC:BaseVC{
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.collectionView.delegate = self
+        print(#function)
     }
     deinit{ print("accountVC deinit!!") }
     override func configureView() {
@@ -70,7 +75,7 @@ extension AccountVC{
             var defaultConfig = cell.defaultContentConfiguration()
             defaultConfig.text = itemIdentifier.label
             defaultConfig.prefersSideBySideTextAndSecondaryText = true
-            var backConfig = UIBackgroundConfiguration.listPlainCell()
+            let backConfig = UIBackgroundConfiguration.listPlainCell()
             cell.backgroundConfiguration = backConfig
             cell.contentConfiguration = defaultConfig
             cell.accessories = [.label(text: itemIdentifier.placeholder ?? ""),.disclosureIndicator()]
@@ -111,6 +116,9 @@ extension AccountVC{
         self.diffableDataSource?.supplementaryViewProvider = { collectionView,elementKind,indexPath -> UICollectionReusableView? in
             collectionView.dequeueConfiguredReusableSupplementary(using: sectionHeaderRegistration, for: indexPath)
         }
+        applyByModel()
+    }
+    fileprivate func applyByModel(){
         self.diffableDataSource?.apply({
             var snapshot = NSDiffableDataSourceSnapshot<Section,Item>()
             snapshot.appendSections(Section.allCases)
@@ -125,6 +133,12 @@ extension AccountVC: UICollectionViewDelegate{
         let vc = SettingVC()
         // 터치 후 Select 색상 남기지 않기
         collectionView.deselectItem(at: indexPath, animated: true)
+        vc.completion = { (item:Item)->Void in
+            if let idx = self.mainInfo.firstIndex(where: {item.id == $0.id}){
+                self.mainInfo[idx] = item
+                self.applyByModel()
+            }
+        }
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
